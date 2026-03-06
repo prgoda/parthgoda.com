@@ -1,0 +1,50 @@
+---
+title: "The Reasoning Era"
+slug: "the-reasoning-era"
+date: "2026-03-05"
+category: "ai"
+excerpt: "Large language models have crossed a threshold — from pattern matchers into systems that plan, verify, and revise. Here's what that shift means."
+author: "Parth Goda"
+coverImage: ""
+tags: ["reasoning", "llms", "chain-of-thought"]
+published: true
+aiGenerated: false
+---
+
+## From Autocomplete to Deliberation
+
+For the first few years of the large language model era, critics had a valid complaint: these systems were sophisticated autocomplete engines. They generated plausible-sounding text by predicting the next token, with no internal model of truth, logic, or consequence.
+
+That critique is now out of date.
+
+Modern reasoning models don't just predict — they *think*. They generate intermediate scratchpads, verify their own outputs, backtrack when something feels wrong, and arrive at conclusions through a process that, from the outside, looks a lot like deliberation.
+
+## Why Chain-of-Thought Changes Everything
+
+The key insight behind reasoning models is deceptively simple: if you give a model space to work through a problem step by step before answering, it performs dramatically better.
+
+This isn't just a prompt trick. Trained reasoning models learn to allocate more compute to harder problems, recognize when they've made an error mid-reasoning, and course-correct without external intervention.
+
+The implications are significant:
+
+1. **Math and code**, which require exact answers, now reach near-human expert performance on many benchmarks.
+2. **Planning tasks** — breaking a complex goal into subtasks — become tractable.
+3. **Self-critique** emerges naturally: the model can evaluate its own answer using the same reasoning faculty.
+
+## The Verification Gap
+
+The remaining frontier isn't generation — it's verification. Humans can often recognize a correct answer even when they can't produce it themselves. Models still struggle here: they can generate a sophisticated-looking proof and miss a subtle logical error.
+
+The most promising directions involve:
+
+- **Reward models** trained to evaluate correctness rather than fluency
+- **Tool use** that lets models check math externally (run code, query databases)
+- **Multi-agent debate**, where separate model instances challenge each other's conclusions
+
+## What This Means for Everyone Else
+
+If you're building on top of these systems, the reasoning era changes the calculus significantly.
+
+Tasks that seemed irreducibly human — research synthesis, legal analysis, complex debugging — are increasingly automatable not because models got smarter in a vague sense, but because they can now *work through* a problem rather than just retrieve a cached answer.
+
+The question isn't whether AI can reason. It's what we'll do with systems that can.

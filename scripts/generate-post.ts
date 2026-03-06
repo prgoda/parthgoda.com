@@ -121,6 +121,12 @@ Write the complete MDX post now.`;
   await stream.finalMessage();
   console.log("\n");
 
+  // Strip code fences if the model wrapped the output (e.g. ```mdx ... ```)
+  fullResponse = fullResponse.trim();
+  if (fullResponse.startsWith("```")) {
+    fullResponse = fullResponse.replace(/^```[a-z]*\n?/, "").replace(/\n?```$/, "").trim();
+  }
+
   // Validate frontmatter
   let title: string;
   try {

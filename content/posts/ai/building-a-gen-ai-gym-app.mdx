@@ -1,0 +1,52 @@
+```mdx
+---
+title: "What I Learned Building a Gen AI Gym App Nobody Asked For"
+slug: "building-a-gen-ai-gym-app"
+date: "2026-03-06"
+category: "ai"
+excerpt: "I spent a month building a generative AI fitness app. Here's what the process revealed about where LLMs are genuinely useful — and where they're just expensive autocomplete."
+author: "Parth Goda"
+coverImage: ""
+tags: ["ai", "generative ai", "product", "fitness", "llm"]
+published: true
+aiGenerated: true
+---
+
+Last semester I had a week with no recruiting events, no case competitions, and a dangerous amount of free time. So I did what any reasonable person does: I decided to build something nobody had specifically asked me to build. The result was a generative AI gym app — a tool that takes your available equipment, training history, and stated goals, then generates a periodized workout plan on the fly.
+
+It works. It's also deeply instructive about where LLMs belong in product design and where they absolutely do not.
+
+## The Pitch Seemed Obvious
+
+The fitness app market is enormous and, somehow, still broken. MyFitnessPal tracks calories but its workout logging is clunky. Hevy is clean but static. Most AI-adjacent fitness apps are just rule-based recommendation engines with a chatbot UI slapped on top. The real gap I saw: nobody was using LLMs to do what they're actually good at — synthesizing context and generating *structured, personalized* outputs.
+
+The core loop I designed was simple. A user inputs: their training age, a few 1RM estimates, what equipment they have access to (home gym, commercial gym, hotel rack), how many days per week they can train, and a primary goal. The app then calls GPT-4o with a carefully engineered system prompt and produces a full 4–8 week block with sets, reps, progressive overload targets, and brief coaching notes on key lifts.
+
+The system prompt took about three weeks of iteration. That's not a typo.
+
+## Where the LLM Actually Shines
+
+The honest answer is: personalization at zero marginal cost.
+
+A traditional app would need a decision tree the size of a small country to handle the combinatorial space of user inputs. Home gym with a single barbell and 200lbs of plates, three days a week, intermediate lifter, wants to run a half marathon in four months? A rule-based system either fails gracefully or returns something embarrassingly generic. The LLM just... handles it. Not perfectly, but competently — and it does so with the kind of natural language explanation that actually helps a user understand *why* they're doing Romanian deadlifts on Thursday.
+
+The other place it genuinely earns its compute cost: edge cases and substitutions. Users inevitably have injuries, weird equipment constraints, or preferences that break any static program template. Telling the app "I can't do overhead pressing because of my shoulder" and having it restructure the entire push day without complaint — that's a UX experience that would take an engineering team months to build deterministically.
+
+## Where It Falls Apart
+
+Three places, specifically.
+
+**Numerical consistency.** LLMs are surprisingly bad at maintaining coherent progressive overload across a multi-week block. I'd ask for a 5% weekly load increase on the squat and get outputs where week 3 inexplicably drops weight before climbing again. This isn't a hallucination problem exactly — it's that the model doesn't "remember" the arithmetic the way a spreadsheet would. The fix was to pull the progression logic out entirely, handle it in code, and inject the computed numbers back into the prompt. The LLM should not be your calculator.
+
+**Safety guardrails vs. usefulness tradeoffs.** The model kept hedging — "consult a physician before starting any exercise program," buried disclaimers, watered-down volume recommendations for anyone who mentioned fatigue. I understand why the safety tuning exists. But it creates a product that, at times, feels like it was designed by a legal department. The workaround is careful prompt engineering to establish clear context (this is for informed adult users, not liability reduction), but it's an ongoing battle.
+
+**Latency as a UX killer.** Generating a full 6-week block with coaching notes takes 8–12 seconds on GPT-4o. That's an eternity in consumer software. I ended up streaming the response and rendering it section by section, which helps perceptually, but the fundamental constraint is real. For anything that requires real-time interaction — like a rest timer that adapts based on your last set — a generative approach is the wrong tool entirely.
+
+## The Meta-Lesson
+
+Building this app clarified something I'd been thinking about loosely: the best gen AI products are ones where the *output is consumed asynchronously*. A workout plan you read before going to the gym. A meal prep schedule you execute over a week. A draft email you review before sending. The latency and occasional incoherence of LLMs become acceptable — even invisible — when users aren't waiting on them in real-time.
+
+The fitness apps trying to use AI as a live coaching voice in your ear during a workout? They're fighting the technology's actual strengths. The smartest move is to make the LLM do its best work before you need it, then get out of the way.
+
+The model is a planner, not a spotter.
+```

@@ -1,5 +1,6 @@
 #!/usr/bin/env tsx
 import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenAI } from "@google/genai";
 import matter from "gray-matter";
 import fs from "fs";
 import path from "path";
@@ -30,6 +31,51 @@ function slugify(text: string): string {
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .slice(0, 60);
+}
+
+const IMAGE_STYLE: Record<Category, string> = {
+  ai: "futuristic tech, neural networks, glowing circuits, deep indigo and violet tones, editorial magazine photography style",
+  "mba-life": "business school campus, professionals networking, warm amber tones, editorial magazine photography style",
+  music: "abstract sound waves, concert lighting, instruments, emerald and teal tones, editorial magazine photography style",
+};
+
+async function generateCoverImage(
+  title: string,
+  excerpt: string,
+  category: Category,
+  slug: string
+): Promise<string> {
+  const apiKey = process.env.GOOGLE_API_KEY;
+  if (!apiKey) {
+    console.log("No GOOGLE_API_KEY found — skipping image generation.");
+    return "";
+  }
+
+  console.log("Generating cover image with Imagen...");
+
+  const ai = new GoogleGenAI({ apiKey });
+  const prompt = `Editorial magazine cover photo for an article titled "${title}". ${excerpt} Visual style: ${IMAGE_STYLE[category]}. No text, no words, no letters in the image. High quality, professional photography.`;
+
+  const response = await ai.models.generateImages({
+    model: "imagen-3.0-generate-001",
+    prompt,
+    config: { numberOfImages: 1, outputMimeType: "image/jpeg" },
+  });
+
+  const imageBytes = response.generatedImages?.[0]?.image?.imageBytes;
+  if (!imageBytes) {
+    console.log("Image generation returned no data — skipping.");
+    return "";
+  }
+
+  const imgDir = path.join(process.cwd(), "public", "images", "posts");
+  fs.mkdirSync(imgDir, { recursive: true });
+
+  const imgPath = path.join(imgDir, `${slug}.jpg`);
+  fs.writeFileSync(imgPath, Buffer.from(imageBytes as string, "base64"));
+
+  console.log(`Cover image saved: public/images/posts/${slug}.jpg`);
+  return `/images/posts/${slug}.jpg`;
 }
 
 async function main() {
@@ -84,6 +130,7 @@ Rules:
 - excerpt: 1–2 sentences for card preview
 - tags: YAML array of 2–5 lowercase strings
 - Do NOT include a top-level # heading
+- Do NOT wrap output in code fences or backticks — output raw MDX only
 - Do NOT include a conclusion that merely summarizes — end with your sharpest observation
 - Write the full post without truncating`;
 
@@ -121,17 +168,22 @@ Write the complete MDX post now.`;
   await stream.finalMessage();
   console.log("\n");
 
-  // Strip code fences if the model wrapped the output (e.g. ```mdx ... ```)
+  // Strip code fences if model wrapped the output
   fullResponse = fullResponse.trim();
   if (fullResponse.startsWith("```")) {
-    fullResponse = fullResponse.replace(/^```[a-z]*\n?/, "").replace(/\n?```$/, "").trim();
+    fullResponse = fullResponse
+      .replace(/^```[a-z]*\n?/, "")
+      .replace(/\n?```$/, "")
+      .trim();
   }
 
-  // Validate frontmatter
+  // Parse frontmatter
   let title: string;
+  let excerpt: string;
   try {
     const { data } = matter(fullResponse);
     title = String(data.title ?? topic);
+    excerpt = String(data.excerpt ?? "");
   } catch {
     console.error("Failed to parse frontmatter from generated content.");
     process.exit(1);
@@ -143,19 +195,21 @@ Write the complete MDX post now.`;
     process.exit(1);
   }
 
-  // Ensure the slug in the content matches our derived slug
-  const finalContent = fullResponse.replace(
-    /^slug:\s*".*?"/m,
-    `slug: "${slug}"`
-  );
+  // Generate cover image
+  const coverImage = await generateCoverImage(title, excerpt, category, slug);
+
+  // Write final MDX with correct slug and coverImage
+  let finalContent = fullResponse
+    .replace(/^slug:\s*".*?"/m, `slug: "${slug}"`)
+    .replace(/^coverImage:\s*".*?"/m, `coverImage: "${coverImage}"`);
 
   const outDir = path.join(process.cwd(), "content", "posts", category);
   fs.mkdirSync(outDir, { recursive: true });
 
-  const outPath = path.join(outDir, `${slug}.mdx`);
-  fs.writeFileSync(outPath, finalContent, "utf-8");
+  fs.writeFileSync(path.join(outDir, `${slug}.mdx`), finalContent, "utf-8");
 
   console.log(`\nDraft created: content/posts/${category}/${slug}.mdx`);
+  if (coverImage) console.log(`Cover image:   public${coverImage}`);
   console.log(`Flip \`published: false\` → \`published: true\` to publish.\n`);
 }
 

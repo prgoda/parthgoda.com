@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { label: "AI", href: "/category/ai" },
   { label: "MBA Life", href: "/category/mba-life" },
   { label: "Music", href: "/category/music" },
+  { label: "Resume", href: "/resume" },
 ];
 
 export default function Nav() {

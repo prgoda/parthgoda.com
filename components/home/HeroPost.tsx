@@ -7,36 +7,24 @@ interface HeroPostProps {
   post: Post;
 }
 
-const GRADIENT_COLORS: Record<string, string> = {
-  ai: "from-indigo-600 to-indigo-900",
-  "mba-life": "from-amber-500 to-amber-800",
-  music: "from-emerald-600 to-emerald-900",
-};
-
 export default function HeroPost({ post }: HeroPostProps) {
-  const gradient = GRADIENT_COLORS[post.category] ?? "from-zinc-600 to-zinc-900";
   const isDraft = !post.published;
 
   return (
-    <article className="grid grid-cols-1 md:grid-cols-2 mb-16">
-      {/* Color block */}
-      <Link href={`/posts/${post.slug}`} className="block overflow-hidden">
-        {post.coverImage ? (
-          // eslint-disable-next-line @next/next/no-img-element
+    <article className="mb-16">
+      {post.coverImage && (
+        <Link href={`/posts/${post.slug}`} className="block overflow-hidden mb-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={post.coverImage}
             alt={post.title}
-            className="w-full h-72 md:h-full object-cover hover:scale-105 transition-transform duration-500"
+            className="w-full h-72 object-cover hover:scale-105 transition-transform duration-500"
           />
-        ) : (
-          <div
-            className={`w-full h-72 md:h-full min-h-72 bg-gradient-to-br ${gradient} hover:scale-105 transition-transform duration-500`}
-          />
-        )}
-      </Link>
+        </Link>
+      )}
 
       {/* Content */}
-      <div className="flex flex-col justify-center px-8 py-10 bg-zinc-50 border border-zinc-200 border-l-0">
+      <div className="flex flex-col justify-center px-8 py-10 bg-zinc-50 border border-zinc-200">
         <div className="flex items-center gap-3 mb-4">
           <CategoryBadge category={post.category} />
           {isDraft && (
@@ -73,3 +61,4 @@ export default function HeroPost({ post }: HeroPostProps) {
     </article>
   );
 }
+

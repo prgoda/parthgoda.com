@@ -7,7 +7,7 @@ import type { Post, PostFrontmatter } from "@/types/post";
 const POSTS_DIR = path.join(process.cwd(), "content/posts");
 
 function getPostFiles(): string[] {
-  const categories = ["ai", "mba-life", "music"];
+  const categories = ["ai", "mba-life", "music", "gtm-engineering"];
   const files: string[] = [];
   for (const cat of categories) {
     const dir = path.join(POSTS_DIR, cat);

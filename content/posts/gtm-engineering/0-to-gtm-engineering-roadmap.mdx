@@ -1,0 +1,240 @@
+---
+title: "0 to GTM Engineering: My 6-Month Roadmap (With Daily Goals)"
+slug: "0-to-gtm-engineering-roadmap"
+date: "2026-03-10"
+category: "gtm-engineering"
+excerpt: "I'm a PM with a consulting background and a technical itch. Here's the exact roadmap I'm following to go from zero to functional GTM engineer — week by week, day by day."
+author: "Parth Goda"
+coverImage: ""
+tags: ["gtm-engineering", "building-in-public", "roadmap", "automation", "product"]
+published: true
+aiGenerated: false
+---
+
+## Why GTM Engineering
+
+I've spent five years on the product and consulting side of go-to-market. I've written roadmaps, run discovery, defined KPIs, and handed specs to engineers. I've never been the person who *builds the tooling* that runs the GTM motion itself.
+
+That gap has started to bother me.
+
+GTM engineering is the emerging discipline that sits at the intersection of sales, marketing, data, and software. GTM engineers build the systems that make revenue happen: the integrations between your CRM and your product, the enrichment pipelines that score leads, the automation workflows that trigger the right message at the right moment, the dashboards that tell you if any of it is working.
+
+It's not a role that's been around long enough to have a canonical learning path. So I'm building my own — and documenting it here.
+
+This is that roadmap.
+
+---
+
+## The Starting Point
+
+Here's what I'm bringing in:
+
+- **PM background**: I understand the GTM motion. I've worked alongside sales, marketing, and CS teams. I know what a funnel looks like and why things break.
+- **Light technical skills**: Python, JavaScript basics, SQL, n8n, Claude API. Enough to build, not enough to ship cleanly at speed.
+- **No hands-on experience with the actual GTM stack**: I've never touched Salesforce as a developer. I've used HubSpot as a user, not a builder. I've read about Segment but never instrumented it.
+
+That's the zero. Here's the one I'm building toward.
+
+---
+
+## The Target: What a Functional GTM Engineer Can Do
+
+By the end of six months, I want to be able to:
+
+1. **Instrument a product** — set up event tracking (Segment/Rudderstack) so every meaningful user action is captured and routed to the right destination
+2. **Build and maintain CRM integrations** — sync data between a product database and HubSpot/Salesforce via APIs, keeping records clean and up to date
+3. **Automate outbound workflows** — build sequences that trigger on real behavioral signals, not just list-based blasts
+4. **Score and enrich leads** — pull enrichment data (Clearbit, Apollo, LinkedIn), run it through a scoring model, route high-intent accounts automatically
+5. **Build internal revenue dashboards** — SQL + Metabase/Looker to give GTM teams self-serve visibility into pipeline and attribution
+6. **Use AI in the GTM stack** — LLM-powered personalization, AI SDR workflows, automated research via Claude API
+
+---
+
+## The Roadmap
+
+### Phase 1 — Foundations (Weeks 1–2)
+
+**Goal**: Understand the full GTM tech stack conceptually. Know what each tool does, how data flows through the system, and where integrations live.
+
+**Daily structure**: 2 hours of structured learning + 1 hour of hands-on sandbox work.
+
+**Week 1 — The Stack**
+
+| Day | Goal |
+|-----|------|
+| Mon | Map the modern GTM stack: CRM → MAP → CDP → Data Warehouse → BI. Draw the architecture. |
+| Tue | Set up free HubSpot account. Explore the data model: Contacts, Companies, Deals, Activities. |
+| Wed | Set up free Salesforce Developer Edition. Compare the object model to HubSpot. |
+| Thu | Read the HubSpot API docs end-to-end. Make your first API call (GET /contacts) via Postman. |
+| Fri | Repeat with Salesforce REST API. Authenticate with OAuth. Pull account records. |
+| Sat | Build a simple Python script that reads from HubSpot API and prints contact data. |
+| Sun | Review. Write down what you don't understand. Set goals for Week 2. |
+
+**Week 2 — Events & Data**
+
+| Day | Goal |
+|-----|------|
+| Mon | Learn event tracking fundamentals: what an event is, what properties matter, naming conventions. |
+| Tue | Set up a Segment free account. Instrument a simple HTML page with `analytics.js`. |
+| Wed | Route Segment events to HubSpot. Verify they appear as timeline activities on a contact record. |
+| Thu | Learn the difference between identify, track, page, group calls. Build a realistic event plan for a SaaS product. |
+| Fri | Set up n8n locally. Build your first workflow: webhook → transform → HubSpot API call. |
+| Sat | Build a second n8n workflow: new HubSpot contact → enrich via Clearbit → update record. |
+| Sun | Document everything you built. Write down what broke and how you fixed it. |
+
+---
+
+### Phase 2 — Integrations (Weeks 3–4)
+
+**Goal**: Be able to build, test, and maintain bidirectional integrations between a product and a CRM.
+
+**Week 3 — Sync Patterns**
+
+| Day | Goal |
+|-----|------|
+| Mon | Learn sync patterns: real-time webhooks vs. scheduled polling vs. event-driven. When to use each. |
+| Tue | Build a webhook listener in Python (Flask) that receives HubSpot contact events. |
+| Wed | Write the logic to upsert records: create if new, update if exists, handle conflicts. |
+| Thu | Add error handling, retries, and logging. A GTM integration that fails silently is worse than no integration. |
+| Fri | Test with real data. Intentionally break things: duplicate records, missing fields, API rate limits. |
+| Sat | Build the reverse sync: product DB → CRM. Mock a `user_signed_up` event, push it to HubSpot. |
+| Sun | Code review your own work. What's brittle? What would break at 10x volume? |
+
+**Week 4 — Full Pipeline**
+
+| Day | Goal |
+|-----|------|
+| Mon | Pick a real product (your own project or a demo app). Define the events that matter for GTM. |
+| Tue | Instrument those events with Segment. Verify they're firing correctly in the debugger. |
+| Wed | Route events to HubSpot. Build a workflow that auto-creates a Deal when a user hits a key milestone. |
+| Thu | Add lead enrichment: on new contact creation, call Clearbit API, write firmographic data back. |
+| Fri | Build a lead score: 0–100 based on enrichment data + behavioral events. Store it as a HubSpot property. |
+| Sat | Trigger an outbound sequence when lead score crosses a threshold. |
+| Sun | End-to-end test. User signs up → event fires → CRM record created → enriched → scored → sequence triggered. |
+
+---
+
+### Phase 3 — Analytics & Attribution (Month 2)
+
+**Goal**: Be able to answer the question "what's actually driving revenue?" with data, not guesses.
+
+**Core skills to build:**
+- SQL for pipeline analysis (conversion rates, velocity, win/loss by segment)
+- Attribution modeling (first touch, last touch, multi-touch linear, time-decay)
+- Building a revenue dashboard from scratch in Metabase or Looker Studio
+
+**Daily structure**: 1 project per day. Build, ship to a local dashboard, move on.
+
+**Week 5–6 — SQL for Revenue**
+
+Daily goals:
+- **Day 1**: Set up a local Postgres DB with synthetic GTM data (leads, opportunities, activities, conversions)
+- **Day 2**: Write queries for top-of-funnel metrics: MQLs by source, conversion rate by channel
+- **Day 3**: Pipeline velocity: time from MQL → SQL → Opportunity → Closed Won by segment
+- **Day 4**: Cohort analysis: do leads from channel X have higher LTV after 90 days?
+- **Day 5**: Win/loss analysis: what firmographic signals correlate with won deals?
+- **Day 6–7**: Build a Metabase dashboard with 6 key GTM KPIs. Share with a friend, get feedback.
+
+**Week 7–8 — Attribution**
+
+Daily goals:
+- **Day 1**: Read the canonical attribution models. Build intuition for when each one lies.
+- **Day 2**: Implement first-touch attribution in SQL. Which campaigns sourced the most pipeline?
+- **Day 3**: Implement multi-touch linear. How does the picture change?
+- **Day 4**: Add time-decay weighting. Build the query that handles it cleanly.
+- **Day 5**: Compare all three models on the same dataset. Write a doc explaining the differences.
+- **Day 6–7**: Build an attribution report that a CMO would actually use. Ship it.
+
+---
+
+### Phase 4 — AI in the GTM Stack (Month 3)
+
+**Goal**: Use LLMs to automate the highest-leverage manual GTM tasks.
+
+This is where my existing Claude API background accelerates things.
+
+**Week 9 — AI Research & Personalization**
+
+| Day | Goal |
+|-----|------|
+| Mon | Build a Python script that takes a company name → scrapes their website → summarizes their ICP fit using Claude |
+| Tue | Pipe the output into HubSpot as a contact note. Now every new lead has an AI-generated research brief. |
+| Wed | Build a personalization engine: given a contact's role, company, and recent activity, generate a tailored first-touch message. |
+| Thu | Evaluate quality. Prompt engineer until the output is something you'd actually send. |
+| Fri | Wire it into n8n: new high-score lead → research → personalized message draft → Slack notification to rep. |
+| Sat–Sun | Build a UI for the rep to review and send with one click. Ship it. |
+
+**Week 10 — AI SDR Workflow**
+
+| Day | Goal |
+|-----|------|
+| Mon | Design the full AI SDR workflow: trigger → research → draft → review → send → track reply → route. |
+| Tue | Build the trigger: new MQL from product behavior. |
+| Wed | Build the research layer: Claude reads their LinkedIn, website, recent news. |
+| Thu | Build the draft layer: Claude generates a 3-email sequence with specific personalization hooks. |
+| Fri | Build the review layer: human-in-the-loop approval before any email sends. |
+| Sat–Sun | Run it on 10 real leads. Measure response rate. Iterate on the prompt. |
+
+**Week 11–12 — Advanced Automation**
+
+- Build a churn signal detector: product usage drop → CRM flag → CS alert
+- Build a upsell trigger: usage milestone → AE notification with talking points
+- Build a competitive intel monitor: mention of a competitor → research brief → relevant rep notified
+
+---
+
+### Phase 5 — Production Readiness (Months 4–5)
+
+**Goal**: Everything built so far works in a sandbox. Month 4–5 is about making it real.
+
+**Key daily habits for this phase:**
+- Every morning: check integration health. Any failed syncs? Any stale records? Fix before building new things.
+- Every week: review what broke in production and why. Document the root cause and the fix.
+- Every two weeks: ship one improvement to something already in production, not just new features.
+
+**Core projects:**
+- Deploy everything to a real cloud environment (AWS Lambda or Railway for the Python services)
+- Add observability: log every API call, alert on failure, track success rates
+- Build a "GTM health dashboard": are all integrations running? Any data quality issues? Last sync timestamps.
+- Document every integration you've built as if someone else needs to maintain it
+
+---
+
+### Phase 6 — Ship Something Real (Month 6)
+
+**Goal**: Build one end-to-end GTM engineering project that's real, public, and demonstrable.
+
+Options I'm weighing:
+1. An open-source GTM starter kit (HubSpot + Segment + n8n templates anyone can deploy in 30 minutes)
+2. A lightweight AI SDR tool built on top of the Claude API
+3. A revenue attribution CLI that connects to your CRM and outputs attribution reports in the terminal
+
+I'll pick based on what's most useful by the time I get there.
+
+---
+
+## How I'm Tracking Progress
+
+Every Sunday I'll write a short weekly review:
+- What I built
+- What broke and why
+- What I'm carrying into next week
+- One thing I learned that changed how I think about the problem
+
+I'll publish the good ones here.
+
+---
+
+## The Honest Part
+
+I don't know if I'll stick to this perfectly. Life moves. Priorities shift.
+
+But I've found that publishing a plan publicly is the closest thing to a commitment device that actually works. If I go dark for three weeks, you'll notice. That accountability matters.
+
+The goal isn't to become a full-stack software engineer. It's to develop enough GTM engineering depth that I can sit in a room with technical GTM teams, understand what they're building, make better product decisions, and contribute code when it's faster than writing a spec.
+
+Six months from now I'll write a retrospective. We'll see how close this gets.
+
+---
+
+*Week 1 starts Monday. Follow along in the GTM Engineering tab.*

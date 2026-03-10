@@ -1,4 +1,4 @@
-export type CategorySlug = "ai" | "mba-life" | "music";
+export type CategorySlug = "ai" | "mba-life" | "music" | "gtm-engineering";
 
 export interface CategoryConfig {
   label: string;
@@ -30,10 +30,17 @@ export const CATEGORIES: Record<CategorySlug, CategoryConfig> = {
     textColor: "text-emerald-700",
     description: "Music discovery, AI-generated audio, and the creative ownership debate.",
   },
+  "gtm-engineering": {
+    label: "GTM Engineering",
+    color: "rose",
+    bgColor: "bg-rose-600",
+    textColor: "text-rose-700",
+    description: "Building in public — my 0-to-1 journey learning GTM engineering: integrations, automation, and revenue tooling.",
+  },
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | null {
   return CATEGORIES[slug as CategorySlug] ?? null;
 }
 
-export const ALL_CATEGORIES: CategorySlug[] = ["ai", "mba-life", "music"];
+export const ALL_CATEGORIES: CategorySlug[] = ["ai", "mba-life", "music", "gtm-engineering"];

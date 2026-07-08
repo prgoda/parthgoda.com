@@ -65,6 +65,17 @@ export const resume: ResumeData = {
 
   experience: [
     {
+      company: "Pareto Agent",
+      role: "Strategy & Operations — Agentic AI Design and Sales Management",
+      period: "2025",
+      location: "Palo Alto, CA",
+      bullets: [
+        "Led 20+ product demos to renewals and sales executives sourced through customer discovery calls; secured 3 design partnerships to co-develop the platform against live account data",
+        "Architected email outreach module with champion-matching and company-voice email generation engines; secured green light from 2 customers to manage $1.5M of their renewal accounts through the engine",
+        "Built enterprise-facing product and sales deck used in primary investor discussions; contributed to a $3.5M seed round raise for the organization",
+      ],
+    },
+    {
       company: "Accenture",
       role: "Product Manager",
       period: "2022 – Present",

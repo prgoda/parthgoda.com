@@ -127,6 +127,21 @@ export const resume: ResumeData = {
     },
   ],
 
+  hobbies: [
+    { label: "Skateboarding", icon: "🛹" },
+    { label: "Surfing", icon: "🏄" },
+    { label: "Card Tricks", icon: "🃏" },
+    { label: "Percussion", icon: "🥁" },
+    { label: "Guitar", icon: "🎸" },
+    { label: "Bass Guitar", icon: "🎸" },
+    { label: "Boxing", icon: "🥊" },
+    { label: "Muay Thai", icon: "🥋" },
+    { label: "Stand-up Comedy", icon: "🎤" },
+    { label: "Improv", icon: "🎭" },
+    { label: "Vibecoding", icon: "💻" },
+    { label: "Solo Founder", icon: "🚀" },
+  ],
+
   army: {
     role: "Corporal First Class",
     unit: "Singapore Army",

@@ -33,9 +33,9 @@ export default function ResumePage() {
         <EducationList items={resume.education} />
       </ResumeSection>
 
-      {resume.army && (
-        <ResumeSection title="National Service" animationDelay={120}>
-          <HobbiesArmy army={resume.army} />
+      {(resume.hobbies?.length || resume.army) && (
+        <ResumeSection title="Interests & Service" animationDelay={120}>
+          <HobbiesArmy hobbies={resume.hobbies} army={resume.army} />
         </ResumeSection>
       )}
     </main>

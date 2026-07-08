@@ -4,6 +4,7 @@ import ResumeHero from "@/components/resume/ResumeHero";
 import ResumeSection from "@/components/resume/ResumeSection";
 import ExperienceList from "@/components/resume/ExperienceList";
 import EducationList from "@/components/resume/EducationList";
+import HobbiesArmy from "@/components/resume/HobbiesArmy";
 
 export const metadata: Metadata = {
   title: `Resume — ${resume.name}`,
@@ -31,6 +32,12 @@ export default function ResumePage() {
       <ResumeSection title="Education" animationDelay={60}>
         <EducationList items={resume.education} />
       </ResumeSection>
+
+      {resume.army && (
+        <ResumeSection title="National Service" animationDelay={120}>
+          <HobbiesArmy army={resume.army} />
+        </ResumeSection>
+      )}
     </main>
   );
 }

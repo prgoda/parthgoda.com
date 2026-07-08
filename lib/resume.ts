@@ -127,4 +127,13 @@ export const resume: ResumeData = {
     },
   ],
 
+  army: {
+    role: "Corporal First Class",
+    unit: "Singapore Army",
+    period: "",
+    location: "Singapore",
+    bullets: [
+      "Promoted to Corporal First Class for top-decile performance in nationwide cybersecurity protocol redesign",
+    ],
+  },
 };

@@ -61,19 +61,25 @@ export default function ResumeHero({ data }: Props) {
         {data.tagline}
       </p>
 
-      <div className="flex items-center justify-center gap-6 mt-8 text-sm text-zinc-600">
-        <a href={`mailto:${data.email}`} className="hover:text-zinc-900 underline underline-offset-4">
-          {data.email}
-        </a>
-        <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900 underline underline-offset-4">
-          LinkedIn
-        </a>
-        {data.github && (
-          <a href={data.github} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900 underline underline-offset-4">
-            GitHub
-          </a>
-        )}
-      </div>
+      {(data.email || data.linkedin || data.github) && (
+        <div className="flex items-center justify-center gap-6 mt-8 text-sm text-zinc-600">
+          {data.email && (
+            <a href={`mailto:${data.email}`} className="hover:text-zinc-900 underline underline-offset-4">
+              {data.email}
+            </a>
+          )}
+          {data.linkedin && (
+            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900 underline underline-offset-4">
+              LinkedIn
+            </a>
+          )}
+          {data.github && (
+            <a href={data.github} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900 underline underline-offset-4">
+              GitHub
+            </a>
+          )}
+        </div>
+      )}
     </header>
   );
 }

@@ -59,8 +59,8 @@ export const resume: ResumeData = {
   name: "Parth Goda",
   title: "MBA Candidate at Kellogg · Strategy & AI",
   tagline: "Strategy, operations, and go-to-market for agentic AI products.",
-  email: "",
-  linkedin: "",
+  email: "prgoda@gmail.com",
+  linkedin: "https://www.linkedin.com/in/parth-goda-44531a161/",
 
   experience: [
     {

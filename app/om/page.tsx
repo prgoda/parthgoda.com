@@ -41,10 +41,10 @@ const HTML = `
   <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:15px 32px">
     <a href="/om" style="display:flex"><img src="/om/assets/om-logo.svg" alt="Om Aesthetics" style="height:44px;display:block"></a>
     <div style="display:flex;align-items:center;gap:28px;font:600 14px 'Archivo'">
-      <a class="navlink" href="/om">Home</a>
-      <a class="navlink" href="/om">Treatments</a>
-      <a class="navlink" href="/om">About</a>
-      <a class="navlink" href="/om">Contact</a>
+      <a href="/om" style="color:#0f1c2e">Home</a>
+      <a class="navlink" href="/om/treatments">Treatments</a>
+      <a class="navlink" href="/om/about">About</a>
+      <a class="navlink" href="/om/contact">Contact</a>
       <a href="https://api.whatsapp.com/send?phone=6588947314" style="background:#1257c9;color:#fff;padding:10px 18px;border-radius:8px;font-weight:700">Book on WhatsApp</a>
     </div>
   </div>
@@ -58,7 +58,7 @@ const HTML = `
     <p style="font-size:17.5px;line-height:1.6;color:#43566b;max-width:460px;margin:22px 0 0">A doctor-led clinic where every treatment is chosen for evidence, precision and natural results, from non-surgical lifting to injectables and skin health.</p>
     <div style="display:flex;gap:14px;margin-top:30px;flex-wrap:wrap">
       <a href="https://api.whatsapp.com/send?phone=6588947314" style="background:#1257c9;color:#fff;padding:15px 26px;border-radius:9px;font:700 15px 'Archivo'">Book a consultation</a>
-      <a href="/om" style="border:1.5px solid #d3dbe6;color:#0f1c2e;padding:15px 24px;border-radius:9px;font:700 15px 'Archivo'">Explore treatments</a>
+      <a href="/om/treatments" style="border:1.5px solid #d3dbe6;color:#0f1c2e;padding:15px 24px;border-radius:9px;font:700 15px 'Archivo'">Explore treatments</a>
     </div>
     <div style="display:flex;gap:26px;margin-top:34px;flex-wrap:wrap">
       <div><div style="font:800 26px 'Archivo';color:#1257c9">15+</div><div style="font-size:12.5px;color:#5b6f88">years in practice</div></div>
@@ -91,7 +91,7 @@ const HTML = `
     <p style="font-size:15px;color:#43566b;max-width:360px;margin:0">Every protocol is doctor-planned and tailored, never a one-size menu. Here is where most journeys begin.</p>
   </div>
   <div class="om-3col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
-    <a href="/om" class="tcard" style="grid-column:span 1;border:1px solid #e4e9f0;border-radius:14px;padding:26px;display:flex;flex-direction:column;background:#0f1c2e;color:#fff">
+    <a href="/om/treatments" class="tcard" style="grid-column:span 1;border:1px solid #e4e9f0;border-radius:14px;padding:26px;display:flex;flex-direction:column;background:#0f1c2e;color:#fff">
       <div style="font:700 10.5px 'Space Mono',monospace;letter-spacing:.1em;color:#6ea2f0">FEATURED</div>
       <div style="font:700 21px 'Archivo';margin:10px 0 6px;color:#fff">Ultherapy PRIME</div>
       <div style="font-size:13.5px;color:#b7c4d6;line-height:1.55;flex:1">Non-surgical lifting with micro-focused ultrasound, reaching the same deep layer a facelift targets.</div>
@@ -176,7 +176,7 @@ const HTML = `
       <div style="font:700 11px 'Space Mono',monospace;letter-spacing:.12em;color:#6ea2f0">YOUR DOCTOR</div>
       <h2 style="font:700 34px 'Archivo';margin:10px 0 4px">Dr Neil (Nilesh Pawar)</h2>
       <p style="font-size:15px;line-height:1.65;color:#b7c4d6;max-width:580px;margin:8px 0 20px">Board Certified in Aesthetic Medicine (AAAM, USA), one of very few accredited in Singapore, with a Distinction in Clinical Dermatology (UK). He is known for natural, artistic results and his own combination protocols for lifting and slimming.</p>
-      <a href="/om" style="color:#fff;font:700 14px 'Archivo';border-bottom:1.5px solid rgba(255,255,255,.4);padding-bottom:2px">Read his full story &rarr;</a>
+      <a href="/om/about" style="color:#fff;font:700 14px 'Archivo';border-bottom:1.5px solid rgba(255,255,255,.4);padding-bottom:2px">Read his full story &rarr;</a>
     </div>
   </div>
 </div>
@@ -239,11 +239,11 @@ const HTML = `
     </div>
     <div>
       <div style="font:700 12px 'Space Mono',monospace;letter-spacing:.08em;color:#6ea2f0;margin-bottom:14px">TREATMENTS</div>
-      <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px"><a href="/om" style="color:#b7c4d6">Ultherapy PRIME</a><a href="/om" style="color:#b7c4d6">Injectables</a><a href="/om" style="color:#b7c4d6">Skinboosters</a><a href="/om" style="color:#b7c4d6">Thread Lifts</a></div>
+      <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px"><a href="/om/treatments" style="color:#b7c4d6">Ultherapy PRIME</a><a href="/om/treatments" style="color:#b7c4d6">Injectables</a><a href="/om/treatments" style="color:#b7c4d6">Skinboosters</a><a href="/om/treatments" style="color:#b7c4d6">Thread Lifts</a></div>
     </div>
     <div>
       <div style="font:700 12px 'Space Mono',monospace;letter-spacing:.08em;color:#6ea2f0;margin-bottom:14px">CLINIC</div>
-      <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px"><a href="/om" style="color:#b7c4d6">About Dr Neil</a><a href="/om" style="color:#b7c4d6">Why choose us</a><a href="/om" style="color:#b7c4d6">Contact</a><a href="/om" style="color:#b7c4d6">Book now</a></div>
+      <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px"><a href="/om/about" style="color:#b7c4d6">About Dr Neil</a><a href="/om/about" style="color:#b7c4d6">Why choose us</a><a href="/om/contact" style="color:#b7c4d6">Contact</a><a href="/om/contact" style="color:#b7c4d6">Book now</a></div>
     </div>
     <div>
       <div style="font:700 12px 'Space Mono',monospace;letter-spacing:.08em;color:#6ea2f0;margin-bottom:14px">VISIT</div>

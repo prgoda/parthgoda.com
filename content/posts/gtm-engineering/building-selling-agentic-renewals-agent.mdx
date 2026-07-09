@@ -1,0 +1,70 @@
+---
+title: "Three Weeks, One Agent, Ten Demos: Building and Selling Pareto"
+slug: "building-selling-agentic-renewals-agent"
+date: "2026-07-08"
+category: "gtm-engineering"
+excerpt: "My latest internship at Pareto Agent: build and sell an autonomous agentic AI that can do 80% of a B2B renewals account manager's job. Here's how three weeks went — including the dashboard I had to kill and rebuild from scratch."
+author: "Parth Goda"
+coverImage: ""
+tags: ["pareto-agent", "agentic-ai", "b2b-renewals", "building-in-public", "gtm-engineering"]
+published: true
+aiGenerated: false
+---
+
+The brief was simple to say and hard to do: **build and sell an autonomous agentic AI — an agent plus a dashboard — that can handle 80% of what a B2B renewals account manager does all day.**
+
+Not a copilot that nudges. Not a tracker that reminds. An agent that reads the whole account, decides what to do, and does it — while the human stays in control. Three weeks to go from a blank page to something a real revenue leader would put their name on as a design partner.
+
+Here's how it actually went.
+
+## The Goal, Stated Plainly
+
+Renewals are where SaaS revenue quietly lives or dies. Net Revenue Retention is the number boards scrutinize every quarter, and *every* deal counts toward it — not just the whales. But the economics of coverage break down fast: as you move from enterprise into mid-market and SMB, one rep is suddenly responsible for hundreds or thousands of accounts. Somewhere between 20% and 50% of revenue sits in that long tail with almost no visibility.
+
+You can't fix that by adding headcount. You fix it with an agent that owns the renewal book end to end. That was the goal. The rest was execution.
+
+## Week 1 — Learn the Pain Before You Build the Fix
+
+I spent week one *not* building. I ran customer discovery calls and did deep research on where renewals outreach actually breaks, then packaged it into a deck defining the problem and what the solution should look like.
+
+The insight that shaped everything: **outreach fails for structural reasons, not effort ones.**
+
+- **Wrong timing.** The average account gets its first renewal touch ~47 days out. The optimal window opens at 90–120 days. A huge share of deals start too late to influence the outcome at all.
+- **Wrong person.** Roughly 28% of buyer-side champions leave every year, and CRM contact data decays about 30% annually. When the champion is gone and nobody noticed, the account quietly goes at-risk.
+- **Wrong framing.** Most reps open with "are you renewing?" — an interrogative that invites a "let me think about it." An assumptive open performs dramatically better.
+- **Single-threading.** A majority of reps contact exactly one person per account. Won renewals average three-plus contacts; lost ones average barely one.
+
+From there I designed the **outreach agent** as a five-step loop: detect the signal, validate the champion, build a *language profile* from the account's past emails, generate an assumptive first-touch draft, and drop it in an approval queue (auto-send for the clean SMB happy path). The step I cared most about was the language profile — ingesting a customer's own email history so the draft sounds like a rep who's managed the account for two years, not a mail merge. That's what makes personalization survive scale.
+
+Week one output: a shared, evidence-backed picture of the problem and a concrete spec for the fix. No code yet — and that turned out to matter.
+
+## Week 2 — Build Fast, Then Watch It Collapse Under Its Own Weight
+
+Week two I built the agent, then combined it with what my co-interns had built into one full dashboard. We Frankensteined the pieces together until the thing actually worked end to end — which felt like a win.
+
+It wasn't, quite. By the end of the week the dashboard was *bloated*. Every feature we'd bolted on had left a seam. It ran, but it was the kind of "runs" that gets slower and scarier to touch every day. Adding the next thing meant fighting the last three things.
+
+The uncomfortable realization: the fastest way forward was backward. Instead of nursing the Frankenstein, we'd be better off rebuilding the dashboard from scratch — this time from a proper spec / PRD, designed as one coherent product instead of assembled from parts.
+
+So we killed it. A new dashboard rising from the ashes of the old one — a phoenix from the pile we'd just torched.
+
+## Week 3 — The Phoenix, and Ten Demos a Week
+
+Week three we rebuilt the dashboard clean, spec-first. Because the PRD did the arguing up front, the second version came together faster *and* held together better than the one it replaced. Building right turned out to be faster than building twice.
+
+Then came the part that actually sharpens a product: **selling it.** I ran ten demos a week. Each demo was a live test of whether the story held up in front of someone who does this for a living, and each one sent me back with something to fix. Ten demos, ten iterations. The dashboard I ended the week with was shaped by real reactions, not my assumptions.
+
+By the end, the product told a full six-stage renewals story — the agent working an account from **Qualification → Outreach → Proposal → Buyer Evaluation → Negotiation → Close**, reading the account 120 days out instead of the usual 30, with the human in the loop to approve every consequential action. It's positioned as a new teammate that owns the renewal book at roughly a tenth the cost of a loaded rep, and it was finally *design-partner ready.*
+
+## What's Next
+
+Next week we start our **first design partnership.** After three weeks of research, one dashboard we had to bury, a rebuild, and ten demos' worth of feedback, someone's putting real renewals in front of it. That's the whole point — and it's genuinely exciting.
+
+## What I'm Taking Away
+
+- **Spend week one learning, not building.** The research deck became the spec, and the spec became the guardrail for everything after.
+- **A working demo can still be the wrong foundation.** "It runs" and "it's built right" are different claims. Bloat is a real cost, and sometimes a rewrite is the fast path.
+- **Write the PRD, then build.** The rebuilt dashboard was faster to make *because* the thinking happened before the code.
+- **Demos are the best product feedback loop there is.** Ten conversations taught me more than any amount of solo polishing. If you're building something to sell, start selling it before you think it's ready.
+
+More soon — after the design partner kicks off.

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import SubscribeForm from "@/components/newsletter/SubscribeForm";
+import SubstackEmbed from "@/components/newsletter/SubstackEmbed";
 
 // ─────────────────────────────────────────────────────────────
-// Paste your Kit (ConvertKit) form action URL between the quotes,
-// e.g. "https://app.kit.com/forms/1234567/subscriptions".
+// Put your Substack subdomain between the quotes — just the name,
+// e.g. "fdedispatch" for https://fdedispatch.substack.com.
 // While this is empty, the signup box shows a "opening shortly" note.
-const KIT_FORM_ACTION = "";
+const SUBSTACK_PUBLICATION = "";
 // ─────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
@@ -47,7 +47,7 @@ export default function NewsletterPage() {
         <p className="text-sm text-zinc-600 mb-5">
           Get each issue in your inbox. Free, and unsubscribe anytime.
         </p>
-        <SubscribeForm action={KIT_FORM_ACTION || undefined} />
+        <SubstackEmbed publication={SUBSTACK_PUBLICATION || undefined} />
       </section>
 
       {/* What you'll get */}

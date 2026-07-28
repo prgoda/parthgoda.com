@@ -8,7 +8,6 @@ const NAV_ITEMS = [
   { label: "AI", href: "/category/ai" },
   { label: "MBA Life", href: "/category/mba-life" },
   { label: "Music", href: "/category/music" },
-  { label: "GTM Eng", href: "/category/gtm-engineering" },
   { label: "Resume", href: "/resume" },
   { label: "FDE", href: "/forward-deployed-engineer" },
   { label: "Ritual AI", href: "https://ritual-web-app.vercel.app/", external: true },

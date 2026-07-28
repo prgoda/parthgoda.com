@@ -119,6 +119,24 @@ export default function ForwardDeployedEngineerPage() {
         </p>
       </div>
 
+      {/* Newsletter CTA */}
+      <div className="bg-zinc-900 rounded-lg p-6 mb-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div className="font-serif text-lg font-bold text-white">
+            Get the FDE Dispatch
+          </div>
+          <p className="text-sm text-zinc-400 mt-1">
+            Short, practical notes on shipping AI into real workflows.
+          </p>
+        </div>
+        <a
+          href="/newsletter"
+          className="shrink-0 self-start sm:self-auto rounded-lg bg-white px-5 py-2.5 text-sm font-semibold uppercase tracking-wider text-zinc-900 hover:bg-zinc-200 transition-colors"
+        >
+          Subscribe →
+        </a>
+      </div>
+
       {/* Source */}
       <p className="text-sm text-zinc-500 border-t border-zinc-200 pt-6">
         Summarized from{" "}

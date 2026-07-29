@@ -148,6 +148,13 @@ export default function ForwardDeployedEngineerPage() {
         >
           “FDE in 30 Days” by Varick Agents ↗
         </a>
+        . Next:{" "}
+        <a
+          href="/fde-flavors"
+          className="text-zinc-900 font-medium underline underline-offset-4 hover:text-zinc-600"
+        >
+          the 7 flavors of FDE
+        </a>
         .
       </p>
     </article>

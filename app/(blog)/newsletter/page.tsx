@@ -6,7 +6,7 @@ import SubstackEmbed from "@/components/newsletter/SubstackEmbed";
 // Put your Substack subdomain between the quotes — just the name,
 // e.g. "fdedispatch" for https://fdedispatch.substack.com.
 // While this is empty, the signup box shows a "opening shortly" note.
-const SUBSTACK_PUBLICATION = "";
+const SUBSTACK_PUBLICATION = "parthgoda";
 // ─────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {

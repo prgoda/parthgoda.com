@@ -46,7 +46,7 @@ export default function PitchWhy() {
         </p>
 
         <p className="text-zinc-700 leading-relaxed">
-          The people SafetyWing protects aren't abstract users to me — they're
+          The people SafetyWing protects aren't abstract users to me, they're
           the same engineers, consultants, and founders I've worked alongside.
           That's not a line I'm writing because it sounds good. It's the actual
           reason this role caught my attention.
@@ -65,13 +65,13 @@ export default function PitchWhy() {
             risk-taking, demonstrate intellectual curiosity, and do the right
             thing."
           </p>
-          <p className="text-xs text-zinc-400 mt-2">— SafetyWing, on the qualities they seek</p>
+          <p className="text-xs text-zinc-400 mt-2"> SafetyWing, on the qualities they seek</p>
         </blockquote>
 
         <p className="text-zinc-700 leading-relaxed">
           I founded a company as a student, exited it, joined a seed-stage
           startup, scaled it, then went into consulting to sharpen the
-          enterprise muscle. Now I'm at Kellogg deliberately — to add
+          enterprise muscle. Now I'm at Kellogg deliberately, to add
           strategic rigor to an operator background. SafetyWing's Platforms
           internship is where those threads converge.
         </p>

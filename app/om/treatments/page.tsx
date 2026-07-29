@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: { absolute: "Ultherapy PRIME — Om Aesthetics" },
+  title: { absolute: "Ultherapy PRIME, Om Aesthetics" },
   description:
-    "Ultherapy PRIME: FDA-cleared, micro-focused ultrasound that lifts and firms the brow, jaw, neck and chin — no surgery, no downtime.",
+    "Ultherapy PRIME: FDA-cleared, micro-focused ultrasound that lifts and firms the brow, jaw, neck and chin, no surgery, no downtime.",
   robots: { index: false },
 };
 
@@ -67,9 +67,9 @@ const HTML = `
 <!-- trust strip -->
 <div style="border-top:1px solid #eaeef4;border-bottom:1px solid #eaeef4;background:#f6f9fd">
   <div class="om-4col" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)">
-    <div style="padding:24px 28px;border-right:1px solid #eaeef4"><div style="font:800 24px 'Archivo';color:#1257c9">12&ndash;18</div><div style="font-size:12px;color:#5b6f88;margin-top:2px">months of results</div></div>
+    <div style="padding:24px 28px;border-right:1px solid #eaeef4"><div style="font:800 24px 'Archivo';color:#1257c9">12 to 18</div><div style="font-size:12px;color:#5b6f88;margin-top:2px">months of results</div></div>
     <div style="padding:24px 28px;border-right:1px solid #eaeef4"><div style="font:800 24px 'Archivo';color:#1257c9">0</div><div style="font-size:12px;color:#5b6f88;margin-top:2px">days downtime</div></div>
-    <div style="padding:24px 28px;border-right:1px solid #eaeef4"><div style="font:800 24px 'Archivo';color:#1257c9">45&ndash;60</div><div style="font-size:12px;color:#5b6f88;margin-top:2px">min per session</div></div>
+    <div style="padding:24px 28px;border-right:1px solid #eaeef4"><div style="font:800 24px 'Archivo';color:#1257c9">45 to 60</div><div style="font-size:12px;color:#5b6f88;margin-top:2px">min per session</div></div>
     <div style="padding:24px 28px"><div style="font:800 24px 'Archivo';color:#1257c9">FDA</div><div style="font-size:12px;color:#5b6f88;margin-top:2px">cleared technology</div></div>
   </div>
 </div>
@@ -120,7 +120,7 @@ const HTML = `
     <div style="padding:16px 20px;color:#43566b;border-bottom:1px solid #eef1f5">Comfort</div><div style="padding:16px 20px;border-left:1px solid #eef1f5;border-bottom:1px solid #eef1f5;color:#5b6f88">Standard</div><div style="padding:16px 20px;border-left:1px solid #eef1f5;border-bottom:1px solid #eef1f5;background:#f8fbff;font-weight:600">Gentler, refined delivery</div>
     <div style="padding:16px 20px;color:#43566b;border-bottom:1px solid #eef1f5">Real-time imaging</div><div style="padding:16px 20px;border-left:1px solid #eef1f5;border-bottom:1px solid #eef1f5;color:#5b6f88">Yes</div><div style="padding:16px 20px;border-left:1px solid #eef1f5;border-bottom:1px solid #eef1f5;background:#f8fbff;font-weight:600">Yes, enhanced visualization</div>
     <div style="padding:16px 20px;color:#43566b;border-bottom:1px solid #eef1f5">Personalisation</div><div style="padding:16px 20px;border-left:1px solid #eef1f5;border-bottom:1px solid #eef1f5;color:#5b6f88">Fixed protocols</div><div style="padding:16px 20px;border-left:1px solid #eef1f5;border-bottom:1px solid #eef1f5;background:#f8fbff;font-weight:600">Tailored each session</div>
-    <div style="padding:16px 20px;color:#43566b">Results</div><div style="padding:16px 20px;border-left:1px solid #eef1f5;color:#5b6f88">Lift &amp; tighten</div><div style="padding:16px 20px;border-left:1px solid #eef1f5;background:#f8fbff;font-weight:600">Lift &amp; tighten, 12&ndash;18 mo</div>
+    <div style="padding:16px 20px;color:#43566b">Results</div><div style="padding:16px 20px;border-left:1px solid #eef1f5;color:#5b6f88">Lift &amp; tighten</div><div style="padding:16px 20px;border-left:1px solid #eef1f5;background:#f8fbff;font-weight:600">Lift &amp; tighten, 12 to 18 mo</div>
   </div>
 </div>
 
@@ -166,7 +166,7 @@ const HTML = `
     </div>
     <div>
       <div style="font:700 12px 'Space Mono',monospace;letter-spacing:.08em;color:#6ea2f0;margin-bottom:14px">VISIT</div>
-      <div style="font-size:13.5px;line-height:1.7">Mon&ndash;Sat, 10am&ndash;8pm<br>Singapore<br><a href="https://api.whatsapp.com/send?phone=6588947314" style="color:#fff;font-weight:700">(+65) 8894 7314</a></div>
+      <div style="font-size:13.5px;line-height:1.7">Mon to Sat, 10am to 8pm<br>Singapore<br><a href="https://api.whatsapp.com/send?phone=6588947314" style="color:#fff;font-weight:700">(+65) 8894 7314</a></div>
     </div>
   </div>
   <div style="max-width:1200px;margin:36px auto 0;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:#7d93af">

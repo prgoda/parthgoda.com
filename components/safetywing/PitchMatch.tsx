@@ -4,9 +4,9 @@ import { useRef, useEffect, useState } from "react";
 
 const matches = [
   {
-    jd: "Manage partner integrations — data, pricing, eligibility, plan synchronization",
+    jd: "Manage partner integrations, data, pricing, eligibility, plan synchronization",
     parth:
-      "Architected an AI agent underwriting workflow at a global bank integrating policy data, compliance KPIs, human-in-the-loop review, and risk dashboards across systems — same class of multi-party data sync problem.",
+      "Architected an AI agent underwriting workflow at a global bank integrating policy data, compliance KPIs, human-in-the-loop review, and risk dashboards across systems, same class of multi-party data sync problem.",
     icon: "🔗",
   },
   {
@@ -16,7 +16,7 @@ const matches = [
     icon: "🗺️",
   },
   {
-    jd: "Entrepreneurial, self-driven mindset — independent thinker",
+    jd: "Entrepreneurial, self-driven mindset, independent thinker",
     parth:
       "Founded Vency Tech at 20 and exited at a 6× revenue multiple. Scaled TagTeam from seed-stage to $3M ARR and enterprise clients in 24 months. Launched $8M AI practice at Deloitte from a blank slate.",
     icon: "🚀",
@@ -24,13 +24,13 @@ const matches = [
   {
     jd: "Triage bugs, conduct user research, draft product specs",
     parth:
-      "Operationalized user feedback at scale — C-suite workshops with 500+ executives, converted qual insights into scoped pilots. Bug triage, PRDs, and user stories are day-one tools for me, not things to learn on the job.",
+      "Operationalized user feedback at scale, C-suite workshops with 500+ executives, converted qual insights into scoped pilots. Bug triage, PRDs, and user stories are day-one tools for me, not things to learn on the job.",
     icon: "🔍",
   },
   {
     jd: "6-month full-time commitment, fully remote",
     parth:
-      "My whole career has been distributed — managed cross-timezone teams across Singapore, Japan, Korea, Indonesia, and the US. I don't need to learn how to work async; I've never worked any other way.",
+      "My whole career has been distributed, managed cross-timezone teams across Singapore, Japan, Korea, Indonesia, and the US. I don't need to learn how to work async; I've never worked any other way.",
     icon: "🌏",
   },
 ];

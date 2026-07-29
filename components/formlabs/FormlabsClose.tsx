@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 
 const points = [
-  { num: "01", text: "Sales Reps prove the value proposition works — 58% attach shows customers say yes when asked properly." },
+  { num: "01", text: "Sales Reps prove the value proposition works, 58% attach shows customers say yes when asked properly." },
   { num: "02", text: "The opportunity is concentrated: fix Reseller enablement + APAC activation + Web Store value messaging and you're at 60%. The checkout UX is already sound; buyers need conviction before they get there." },
   { num: "03", text: "The roadmap is sequenced: diagnose in QTR 1, activate in QTR 2, optimize in QTR 3, with clear owners and metrics at each stage." },
 ];

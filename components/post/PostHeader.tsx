@@ -13,7 +13,7 @@ export default function PostHeader({ post }: PostHeaderProps) {
     <header className="mb-10">
       {isDraft && (
         <div className="mb-6 px-4 py-3 bg-red-50 border border-red-200 rounded text-red-800 text-sm font-semibold uppercase tracking-widest text-center">
-          Draft — Not Published
+          Draft, Not Published
         </div>
       )}
 

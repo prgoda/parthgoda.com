@@ -7,7 +7,7 @@ import EducationList from "@/components/resume/EducationList";
 import HobbiesArmy from "@/components/resume/HobbiesArmy";
 
 export const metadata: Metadata = {
-  title: `Resume — ${resume.name}`,
+  title: `Resume ${resume.name}`,
   description: resume.tagline,
 };
 

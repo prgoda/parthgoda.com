@@ -6,7 +6,7 @@ const quarters = [
   {
     q: "QTR 1",
     theme: "Diagnose & Build",
-    target: "38–42%",
+    target: "38 to 42%",
     items: [
       "Conduct reseller attach audit by partner",
       "Launch post-purchase opt-out recovery email sequence",
@@ -18,7 +18,7 @@ const quarters = [
   {
     q: "QTR 2",
     theme: "Activate & Incentivize",
-    target: "48–52%",
+    target: "48 to 52%",
     items: [
       "Launch reseller certification + tiered margin program",
       "Deploy ROI calculator and case study library",
@@ -30,9 +30,9 @@ const quarters = [
   {
     q: "QTR 3",
     theme: "Optimize & Scale",
-    target: "58–62%",
+    target: "58 to 62%",
     items: [
-      "Optimize attach incentives based on Q1–2 data",
+      "Optimize attach incentives based on Q1 to 2 data",
       "Drive 3-year plan adoption with active rep/reseller push",
       "Automated attach tracking dashboard for leadership",
       "Evaluate plan expansion (Fuse Series, Form 4L)",

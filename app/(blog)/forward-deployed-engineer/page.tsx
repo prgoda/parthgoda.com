@@ -9,22 +9,22 @@ export const metadata: Metadata = {
 
 const WEEKS = [
   {
-    range: "Days 1–7",
+    range: "Days 1 to 7",
     title: "Build",
     body: "Ship an agent that completes one real workflow end-to-end, with full visibility into every step.",
   },
   {
-    range: "Days 8–14",
+    range: "Days 8 to 14",
     title: "Stabilize",
     body: "Turn the demo into a production system: structured outputs, checkpointing, and failure recovery.",
   },
   {
-    range: "Days 15–21",
+    range: "Days 15 to 21",
     title: "Measure",
     body: "Evaluate against a golden dataset. Find failure modes, quantify cost, prove reliability.",
   },
   {
-    range: "Days 22–30",
+    range: "Days 22 to 30",
     title: "Document & Defend",
     body: "Write a case study that holds up to both engineers and executives.",
   },
@@ -44,7 +44,7 @@ export default function ForwardDeployedEngineerPage() {
           The FDE, in a nutshell
         </h1>
         <p className="mt-5 text-lg text-zinc-600 leading-relaxed">
-          A Forward Deployed Engineer sits between the business and the AI —
+          A Forward Deployed Engineer sits between the business and the AI,
           finding where intelligence belongs inside real workflows and shipping
           systems that carry actual responsibility.
         </p>

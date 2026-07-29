@@ -6,7 +6,7 @@ import PatreonWhy from "@/components/patreon/PatreonWhy";
 import PatreonCTA from "@/components/patreon/PatreonCTA";
 
 export const metadata: Metadata = {
-  title: "Parth Goda × Patreon — BD Intern",
+  title: "Parth Goda × Patreon, BD Intern",
   description:
     "Why Parth Goda is the right Business Development Intern for Patreon.",
   robots: { index: false },

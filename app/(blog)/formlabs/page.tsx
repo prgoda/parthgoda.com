@@ -9,7 +9,7 @@ import FormlabsMeasure from "@/components/formlabs/FormlabsMeasure";
 import FormlabsClose from "@/components/formlabs/FormlabsClose";
 
 export const metadata: Metadata = {
-  title: "Doubling the Service Attach Rate — Formlabs GTM Strategy",
+  title: "Doubling the Service Attach Rate, Formlabs GTM Strategy",
   description:
     "A 9-month roadmap to take Formlabs service attach rate from 30% to 60% across Direct, Reseller, and Web Store channels.",
   robots: { index: false },

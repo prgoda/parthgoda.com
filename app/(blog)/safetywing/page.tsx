@@ -6,7 +6,7 @@ import PitchWhy from "@/components/safetywing/PitchWhy";
 import PitchCTA from "@/components/safetywing/PitchCTA";
 
 export const metadata: Metadata = {
-  title: "Parth Goda × SafetyWing — PM Intern",
+  title: "Parth Goda × SafetyWing, PM Intern",
   description:
     "Why Parth Goda is the right Product Manager Intern for SafetyWing's Platforms team.",
   robots: { index: false },

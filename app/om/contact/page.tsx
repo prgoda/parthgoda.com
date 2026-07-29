@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: { absolute: "Contact — Om Aesthetics" },
+  title: { absolute: "Contact, Om Aesthetics" },
   description:
-    "Book a consultation with Dr Neil at Om Aesthetics, Singapore. WhatsApp (+65) 8894 7314. Mon–Sat, 10am–8pm.",
+    "Book a consultation with Dr Neil at Om Aesthetics, Singapore. WhatsApp (+65) 8894 7314. Mon to Sat, 10am to 8pm.",
   robots: { index: false },
 };
 
@@ -61,7 +61,7 @@ const HTML = `
       </div>
       <div style="display:flex;align-items:center;gap:14px;border:1px solid #e4e9f0;border-radius:12px;padding:18px 20px">
         <div style="width:42px;height:42px;border-radius:11px;background:#fef3d9;display:flex;align-items:center;justify-content:center;font-size:20px">&#128336;</div>
-        <div><div style="font:700 15px 'Archivo';color:#0f1c2e">Opening hours</div><div style="font-size:13px;color:#5b6f88">Mon&ndash;Sat, 10am&ndash;8pm &middot; Closed Sun</div></div>
+        <div><div style="font:700 15px 'Archivo';color:#0f1c2e">Opening hours</div><div style="font-size:13px;color:#5b6f88">Mon to Sat, 10am to 8pm &middot; Closed Sun</div></div>
       </div>
     </div>
   </div>
@@ -116,7 +116,7 @@ const HTML = `
     </div>
     <div>
       <div style="font:700 12px 'Space Mono',monospace;letter-spacing:.08em;color:#6ea2f0;margin-bottom:14px">VISIT</div>
-      <div style="font-size:13.5px;line-height:1.7">Mon&ndash;Sat, 10am&ndash;8pm<br>Singapore<br><a href="https://api.whatsapp.com/send?phone=6588947314" style="color:#fff;font-weight:700">(+65) 8894 7314</a></div>
+      <div style="font-size:13.5px;line-height:1.7">Mon to Sat, 10am to 8pm<br>Singapore<br><a href="https://api.whatsapp.com/send?phone=6588947314" style="color:#fff;font-weight:700">(+65) 8894 7314</a></div>
     </div>
   </div>
   <div style="max-width:1200px;margin:36px auto 0;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:#7d93af">

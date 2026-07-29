@@ -3,7 +3,7 @@ import Link from "next/link";
 import SubstackEmbed from "@/components/newsletter/SubstackEmbed";
 
 // ─────────────────────────────────────────────────────────────
-// Put your Substack subdomain between the quotes — just the name,
+// Put your Substack subdomain between the quotes, just the name,
 // e.g. "fdedispatch" for https://fdedispatch.substack.com.
 // While this is empty, the signup box shows a "opening shortly" note.
 const SUBSTACK_PUBLICATION = "parthgoda";
@@ -12,11 +12,11 @@ const SUBSTACK_PUBLICATION = "parthgoda";
 export const metadata: Metadata = {
   title: "Newsletter",
   description:
-    "The FDE Dispatch — short, practical notes on Forward Deployed Engineering: shipping AI into real workflows.",
+    "The FDE Dispatch, short, practical notes on Forward Deployed Engineering: shipping AI into real workflows.",
 };
 
 const WHAT_YOU_GET = [
-  "Field notes on deploying AI into real workflows — what works, what breaks.",
+  "Field notes on deploying AI into real workflows, what works, what breaks.",
   "The commercial + technical judgment that separates a demo from production.",
   "Short and practical. A few minutes, no fluff.",
 ];
@@ -33,7 +33,7 @@ export default function NewsletterPage() {
           The FDE Dispatch
         </h1>
         <p className="mt-5 text-lg text-zinc-600 leading-relaxed">
-          Short, practical notes on Forward Deployed Engineering — finding where
+          Short, practical notes on Forward Deployed Engineering, finding where
           AI belongs inside real workflows and shipping systems that carry real
           responsibility. FDE-focused for now.
         </p>

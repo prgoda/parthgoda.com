@@ -10,7 +10,7 @@ const kpis = [
 ];
 
 const questions = [
-  "Why is APAC at 3%? Distribution, pricing, or offer-awareness — one call with the regional team will reveal this.",
+  "Why is APAC at 3%? Distribution, pricing, or offer-awareness, one call with the regional team will reveal this.",
   "What do resellers say when they don't offer a plan? Training/tools gap or incentive gap: different fixes.",
   "What is the Web Store checkout opt-out rate and at what step does it occur? Cart analytics will show this immediately.",
   "What is the reseller margin on service plans vs. hardware? Determines whether incentive redesign is needed.",

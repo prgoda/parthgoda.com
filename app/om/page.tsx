@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: { absolute: "Om Aesthetics — Singapore Aesthetic Medicine Clinic" },
+  title: { absolute: "Om Aesthetics, Singapore Aesthetic Medicine Clinic" },
   description:
-    "A doctor-led aesthetic medicine clinic in Singapore, focused on evidence, precision and natural results — from non-surgical lifting to injectables and skin health.",
+    "A doctor-led aesthetic medicine clinic in Singapore, focused on evidence, precision and natural results, from non-surgical lifting to injectables and skin health.",
   robots: { index: false },
 };
 
@@ -247,7 +247,7 @@ const HTML = `
     </div>
     <div>
       <div style="font:700 12px 'Space Mono',monospace;letter-spacing:.08em;color:#6ea2f0;margin-bottom:14px">VISIT</div>
-      <div style="font-size:13.5px;line-height:1.7">Mon&ndash;Sat, 10am&ndash;8pm<br>Singapore<br><a href="https://api.whatsapp.com/send?phone=6588947314" style="color:#fff;font-weight:700">(+65) 8894 7314</a></div>
+      <div style="font-size:13.5px;line-height:1.7">Mon to Sat, 10am to 8pm<br>Singapore<br><a href="https://api.whatsapp.com/send?phone=6588947314" style="color:#fff;font-weight:700">(+65) 8894 7314</a></div>
     </div>
   </div>
   <div style="max-width:1200px;margin:36px auto 0;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:#7d93af">

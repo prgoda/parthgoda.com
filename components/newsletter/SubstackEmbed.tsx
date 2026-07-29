@@ -8,7 +8,7 @@ export default function SubstackEmbed({ publication }: Props) {
   if (!publication) {
     return (
       <div className="rounded-lg border border-dashed border-zinc-300 bg-zinc-50 px-5 py-4 text-sm text-zinc-500">
-        Subscriptions open shortly — check back soon.
+        Subscriptions open shortly, check back soon.
       </div>
     );
   }

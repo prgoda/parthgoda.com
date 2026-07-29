@@ -21,7 +21,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryConfig> = {
     color: "amber",
     bgColor: "bg-amber-500",
     textColor: "text-amber-700",
-    description: "Notes from business school — recruiting, strategy, and the MBA experience.",
+    description: "Notes from business school, recruiting, strategy, and the MBA experience.",
   },
   music: {
     label: "Music",
@@ -35,7 +35,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryConfig> = {
     color: "rose",
     bgColor: "bg-rose-600",
     textColor: "text-rose-700",
-    description: "Building in public — my 0-to-1 journey learning GTM engineering: integrations, automation, and revenue tooling.",
+    description: "Building in public, my 0-to-1 journey learning GTM engineering: integrations, automation, and revenue tooling.",
   },
 };
 

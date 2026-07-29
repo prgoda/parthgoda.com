@@ -19,7 +19,7 @@ const playbooks = [
       {
         label: "Incentives",
         items: [
-          { title: "Tiered Margin Structure", body: "Resellers hitting 40%+ attach earn an additional 3–5% margin on all service plans that quarter. Funded by incremental plan revenue." },
+          { title: "Tiered Margin Structure", body: "Resellers hitting 40%+ attach earn an additional 3 to 5% margin on all service plans that quarter. Funded by incremental plan revenue." },
           { title: "Deal Registration Bonus for Plans", body: "When a reseller registers a deal that includes a service plan, they receive a higher deal registration bonus than hardware-only deals." },
           { title: "Dedicated Channel Manager Attach KPI", body: "Makes plan inclusion a commercial priority, tracked in every partner review." },
         ],
@@ -34,7 +34,7 @@ const playbooks = [
       {
         label: "Pre-Sale",
         items: [
-          { title: "Pre-Checkout ROI Case", body: "76% still opt out despite seeing all 3 plan tiers. The value case must be made on product pages before checkout — lead with cost-of-downtime, not feature lists." },
+          { title: "Pre-Checkout ROI Case", body: "76% still opt out despite seeing all 3 plan tiers. The value case must be made on product pages before checkout, lead with cost-of-downtime, not feature lists." },
           { title: "Case Studies", body: "Feature customers who used hot-swap replacement to avoid production shutdowns. Dental use case is particularly compelling." },
           { title: "Sales Enablement", body: "Email templates, talk tracks, and objection handlers for reps and resellers to use at point of sale." },
         ],
@@ -42,7 +42,7 @@ const playbooks = [
       {
         label: "Post-Sale",
         items: [
-          { title: "30-Day Email", body: "Trigger to every plan-less buyer: 'Your printer warranty window — protect your uptime now.' While new-product anxiety is highest." },
+          { title: "30-Day Email", body: "Trigger to every plan-less buyer: 'Your printer warranty window, protect your uptime now.' While new-product anxiety is highest." },
           { title: "60-Day Nurture", body: "Customer story about production downtime prevention. Quantified business impact. Limited-time upgrade offer." },
           { title: "In-Dashboard Prompt", body: "Surface plan upgrade in Formlabs Dashboard for unprotected printers. Highest-context intervention." },
         ],
@@ -57,7 +57,7 @@ const playbooks = [
       {
         label: "Diagnose First",
         items: [
-          { title: "Distributor Audit", body: "One structured call per APAC distributor: 'Walk me through your last 5 printer sales — at which point did you present the service plan?' If they can't answer, the plan isn't being pitched." },
+          { title: "Distributor Audit", body: "One structured call per APAC distributor: 'Walk me through your last 5 printer sales, at which point did you present the service plan?' If they can't answer, the plan isn't being pitched." },
           { title: "Pricing Localisation Analysis", body: "Map plan price as % of printer ASP by country vs. AMER/EMEA. A pricing mismatch is a quick fix; a fundamental affordability gap is a different conversation." },
           { title: "Support Language Barrier Check", body: "Formlabs support is listed in English, German, French, and Italian only. If APAC buyers can't access support in their language, that's a product gap that must be fixed before pushing sales." },
         ],
@@ -66,7 +66,7 @@ const playbooks = [
         label: "Activate Based on What We Learn",
         items: [
           { title: "If Training Gap: Reseller Certification", body: "Adapt the global program with local currency pricing and translated materials for JP, KR, AU, SG as a minimum." },
-          { title: "If Pricing Gap: Local Plan Pricing", body: "A 15–20% price reduction anchored to local printer ASP, tested in Australia first, before regional rollout." },
+          { title: "If Pricing Gap: Local Plan Pricing", body: "A 15 to 20% price reduction anchored to local printer ASP, tested in Australia first, before regional rollout." },
           { title: "APAC Pilot Country", body: "Go deep in one high-volume market for 6 months. Full enablement, localised pricing, localised support. Use results to build the business case for the region." },
         ],
       },
@@ -137,7 +137,7 @@ export default function FormlabsPlaybooks() {
         Channel Playbooks
       </h2>
       <p className={`text-zinc-500 text-sm mb-8 resume-slide-up ${visible ? "is-visible" : ""}`} style={{ transitionDelay: "60ms" }}>
-        Detailed tactics for each channel — what to do, in what order, and why.
+        Detailed tactics for each channel, what to do, in what order, and why.
       </p>
       <div className="space-y-6">
         {playbooks.map((pb, i) => <Playbook key={pb.channel} pb={pb} delay={i * 80} />)}

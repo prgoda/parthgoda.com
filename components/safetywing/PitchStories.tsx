@@ -6,19 +6,19 @@ const stories = [
   {
     tag: "Integration & Platforms",
     title: "I've already solved the Platforms problem.",
-    body: `At Deloitte, I architected an AI agent underwriting workflow for a global bank. The job wasn't "build a model" — it was integrating policy data sources, pricing rules, eligibility logic, and human review into a coherent platform other teams could trust. I embedded compliance guardrails, defined the KPI schema, and built the dashboards that let risk and ops teams self-serve. That's SafetyWing's Platforms problem: partner data, pricing sync, eligibility rules, plan state — all needing to flow cleanly across systems. I know what it takes to make that work under real constraints.`,
+    body: `At Deloitte, I architected an AI agent underwriting workflow for a global bank. The job wasn't "build a model", it was integrating policy data sources, pricing rules, eligibility logic, and human review into a coherent platform other teams could trust. I embedded compliance guardrails, defined the KPI schema, and built the dashboards that let risk and ops teams self-serve. That's SafetyWing's Platforms problem: partner data, pricing sync, eligibility rules, plan state, all needing to flow cleanly across systems. I know what it takes to make that work under real constraints.`,
     metric: "45% faster risk assessment, zero data quality regressions",
   },
   {
     tag: "Roadmap Ownership",
     title: "I've owned roadmaps under pressure, not just contributed to them.",
-    body: `At RGP, I built the product-led growth motion for a $745K risk management platform — aligning legal, marketing, engineering, and customer success around a shared outcome. I wasn't coordinating; I was deciding. I ran the discovery, wrote the specs, prioritized the backlog, and shipped. The result cut audit timelines 40% and saved $1M in labour costs. SafetyWing wants an intern who will "gradually own the Platforms area." I've done it with higher stakes than an internship — starting independently rather than gradually is something I'm built for.`,
+    body: `At RGP, I built the product-led growth motion for a $745K risk management platform, aligning legal, marketing, engineering, and customer success around a shared outcome. I wasn't coordinating; I was deciding. I ran the discovery, wrote the specs, prioritized the backlog, and shipped. The result cut audit timelines 40% and saved $1M in labour costs. SafetyWing wants an intern who will "gradually own the Platforms area." I've done it with higher stakes than an internship, starting independently rather than gradually is something I'm built for.`,
     metric: "$745K platform, 40% faster audits, $1M in savings",
   },
   {
     tag: "Builder Mindset",
-    title: "I've founded, scaled, and exited. Not as a side project — as a company.",
-    body: `I founded Vency Tech, a partner relationship management SaaS, during university. I ran discovery, built the MVP, acquired enterprise clients, and exited at a 6× revenue multiple — before I had a first full-time job. Then at TagTeam, a seed-stage AI startup, I scaled the delivery team from 9 people to an enterprise-ready operation, won the first enterprise client in 3 months, and hit $3M ARR. SafetyWing wants people who think independently and take calculated risks. That isn't a posture I'm adopting for this application — it's how I've operated my entire career.`,
+    title: "I've founded, scaled, and exited. Not as a side project, as a company.",
+    body: `I founded Vency Tech, a partner relationship management SaaS, during university. I ran discovery, built the MVP, acquired enterprise clients, and exited at a 6× revenue multiple, before I had a first full-time job. Then at TagTeam, a seed-stage AI startup, I scaled the delivery team from 9 people to an enterprise-ready operation, won the first enterprise client in 3 months, and hit $3M ARR. SafetyWing wants people who think independently and take calculated risks. That isn't a posture I'm adopting for this application, it's how I've operated my entire career.`,
     metric: "6× exit at Vency Tech · $3M ARR at TagTeam in 24 months",
   },
 ];

@@ -16,7 +16,7 @@ export interface ResumeEducation {
 
 export interface ResumeSkill {
   name: string;
-  level: number; // 0–100
+  level: number; // 0 to 100
   category: "technical" | "business" | "creative";
 }
 
@@ -65,8 +65,8 @@ export const resume: ResumeData = {
   experience: [
     {
       company: "Pareto Agent",
-      role: "Strategy and Operations – Agentic AI Design and Sales Management",
-      period: "2024 – 2025",
+      role: "Strategy and Operations, Agentic AI Design and Sales Management",
+      period: "2024 to 2025",
       location: "Palo Alto, CA",
       bullets: [
         "Led 20+ product demos to renewals and sales executives sourced through customer discovery calls; secured 3 design partnerships to co-develop the platform against live account data",
@@ -76,8 +76,8 @@ export const resume: ResumeData = {
     },
     {
       company: "Deloitte Consulting",
-      role: "Senior Solutions Consultant – Digital Transformation (Agentic AI)",
-      period: "2024 – 2025",
+      role: "Senior Solutions Consultant, Digital Transformation (Agentic AI)",
+      period: "2024 to 2025",
       location: "Singapore",
       bullets: [
         "Built $8M AI Automation practice from zero by identifying niche market trends and developing agentic AI capabilities to automate fragmented workflows across government and financial institutions",
@@ -88,8 +88,8 @@ export const resume: ResumeData = {
     },
     {
       company: "Resource Global Professionals",
-      role: "Senior Solutions Consultant – Digital Transformation & Process Engineering",
-      period: "2022 – 2024",
+      role: "Senior Solutions Consultant, Digital Transformation & Process Engineering",
+      period: "2022 to 2024",
       location: "Singapore",
       bullets: [
         "Drove $9.3M in annual revenue leading a 3-member global team, owning the full deal lifecycle: discovery, competitive positioning, pricing strategy, and C-suite negotiations for bespoke enterprise solutions",
@@ -99,8 +99,8 @@ export const resume: ResumeData = {
     },
     {
       company: "TagTeam Technologies (AI & Data Annotation Startup)",
-      role: "Operations and Solutions Lead – Computer Vision & Multi Model Expert",
-      period: "2020 – 2022",
+      role: "Operations and Solutions Lead, Computer Vision & Multi Model Expert",
+      period: "2020 to 2022",
       location: "Singapore",
       bullets: [
         "Generated $3M revenue in 2 years at seed-stage startup; won first enterprise client within 3 months by owning outreach, proposals, and solution design; built 9-person AI delivery team and operating model from scratch",
@@ -114,14 +114,14 @@ export const resume: ResumeData = {
     {
       institution: "Kellogg School of Management, Northwestern University",
       degree: "Candidate for Master of Business Administration, Class of 2027 · Majors in Strategy and AI",
-      period: "2025 – Present",
+      period: "2025 to Present",
       location: "Chicago, IL",
       notes: "Kellogg Merit Scholar · Band (Bass Guitar) · Kellogg Founders · KFIT Club (VP) · SEA Club (VP)",
     },
     {
       institution: "Singapore Management University",
       degree: "Bachelor of Science in Information Systems, Major in Business Analytics · GPA 3.44/4.0 · Cum Laude",
-      period: "2017 – 2021",
+      period: "2017 to 2021",
       location: "Singapore",
       notes: "Global Industry Preparation Scholarship (top 5% of class) · SAS Institute Scholarship (1 of 8 nationally)",
     },

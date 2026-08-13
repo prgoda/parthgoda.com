@@ -26,11 +26,11 @@ function monthLabel(key: string): string {
   });
 }
 
-export default function NetworkDashboard() {
-  const stats = dashboardStats();
+export default async function NetworkDashboard() {
+  const stats = await dashboardStats();
   const today = todayISO();
 
-  const focus = listPeople({ sort: "urgency" })
+  const focus = (await listPeople({ sort: "urgency" }))
     .filter((p) => p.status === "overdue" || p.status === "due-soon")
     .slice(0, 10);
 

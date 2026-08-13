@@ -48,7 +48,7 @@ export default async function PeoplePage({
   const sp = await searchParams;
   const archived = sp.archived === "1";
 
-  const people = listPeople({
+  const people = await listPeople({
     search: sp.q,
     status: (sp.status as ContactStatus | "all" | "never") ?? "all",
     closeness: sp.closeness ? (Number(sp.closeness) as Closeness) : undefined,
@@ -58,7 +58,7 @@ export default async function PeoplePage({
     sort: (sp.sort as "urgency" | "name" | "recent" | "closeness" | "added") ?? "urgency",
   });
 
-  const places = distinctWhereMet();
+  const places = await distinctWhereMet();
   const overdue = people.filter((p) => p.status === "overdue").length;
 
   return (

@@ -102,10 +102,10 @@ export default async function PersonPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const person = getPerson(Number(id));
+  const person = await getPerson(Number(id));
   if (!person) notFound();
 
-  const interactions = getInteractions(person.id);
+  const interactions = await getInteractions(person.id);
   const tags = person.tags?.split(",").map((t) => t.trim()).filter(Boolean) ?? [];
 
   return (

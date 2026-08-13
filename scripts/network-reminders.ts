@@ -10,7 +10,7 @@
  * Cron it once a week and the list stays honest.
  */
 import { loadEnv } from "./_env";
-import { getDb } from "../lib/network/db";
+import { getDb, query } from "../lib/network/db";
 import { dashboardStats, listPeople } from "../lib/network/queries";
 import { buildDigest } from "../lib/network/digest";
 import { sendMail, detectTransport } from "../lib/network/mailer";
@@ -43,10 +43,9 @@ async function main() {
     "",
   );
   const today = todayISO();
-  const db = getDb();
 
   // Who is on the hook today.
-  const candidates = listPeople({ sort: "urgency" }).filter(
+  const candidates = (await listPeople({ sort: "urgency" })).filter(
     (p) => p.status === "overdue" || (includeSoon && p.status === "due-soon"),
   );
 
@@ -54,9 +53,10 @@ async function main() {
   const cutoff = addDays(today, -Math.max(0, cooldownDays));
   const recentlyNagged = new Set(
     (
-      db
-        .prepare("SELECT DISTINCT person_id FROM reminder_log WHERE sent_on > ?")
-        .all(cutoff) as { person_id: number }[]
+      await query<{ person_id: number }>(
+        "SELECT DISTINCT person_id FROM reminder_log WHERE sent_on > ?",
+        [cutoff],
+      )
     ).map((r) => r.person_id),
   );
 
@@ -73,7 +73,7 @@ async function main() {
     return;
   }
 
-  const stats = dashboardStats();
+  const stats = await dashboardStats();
   const digest = buildDigest({
     people,
     summary: {
@@ -107,13 +107,15 @@ async function main() {
     html: digest.html,
   });
 
-  const record = db.prepare(
-    "INSERT INTO reminder_log (person_id, sent_on, created_at) VALUES (?, ?, ?)",
-  );
+  const db = await getDb();
   const now = new Date().toISOString();
-  db.transaction(() => {
-    for (const p of people) record.run(p.id, today, now);
-  })();
+  await db.batch(
+    people.map((p) => ({
+      sql: "INSERT INTO reminder_log (person_id, sent_on, created_at) VALUES (?, ?, ?)",
+      args: [p.id, today, now],
+    })),
+    "write",
+  );
 
   console.log(
     `Sent ${people.length} reminder${people.length === 1 ? "" : "s"} to ${to} via ${transport}.`,

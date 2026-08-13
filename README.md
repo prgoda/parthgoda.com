@@ -36,14 +36,44 @@ with. Not linked from anywhere on the site, `noindex`, and blocked in
 `robots.txt`. Run `npm run dev` and open
 [http://localhost:3000/network](http://localhost:3000/network).
 
-Everything lives in a local SQLite file at `data/network.db`, which is
-gitignored and never deployed. Point `NETWORK_DB_PATH` somewhere else if you
-want it in iCloud or Dropbox for backup.
+**Storage.** One driver, two homes. With no `TURSO_DATABASE_URL` set it is a
+local SQLite file at `data/network.db` (gitignored, never deployed). Set
+`TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` and the same code talks to Turso
+instead, which speaks the same SQLite dialect. Production needs the hosted
+option: Vercel's filesystem is ephemeral, so a local file there is wiped on
+every cold start.
 
-**Locking it.** Set `NETWORK_PASSPHRASE` in `.env.local` and `/network`
-redirects to a passphrase screen; the session cookie lasts 30 days. Leave it
-empty and the dashboard is open, which is fine while it only runs on localhost.
-Do not deploy this to Vercel with the passphrase unset.
+**Locking it.** Set `NETWORK_PASSPHRASE` and `/network` redirects to a
+passphrase screen; the session cookie lasts 30 days. Leave it empty and the
+dashboard is open in dev and returns 404 in production, so an unconfigured
+deploy cannot expose it.
+
+### Going live
+
+```bash
+# 1. Create the hosted database
+brew install tursodatabase/tap/turso
+turso auth signup
+turso db create parthgoda-network
+turso db show parthgoda-network --url          # -> TURSO_DATABASE_URL
+turso db tokens create parthgoda-network       # -> TURSO_AUTH_TOKEN
+
+# 2. Tell Vercel about it (or paste them into the dashboard)
+vercel login
+vercel env add NETWORK_PASSPHRASE production
+vercel env add NETWORK_SECRET production
+vercel env add TURSO_DATABASE_URL production
+vercel env add TURSO_AUTH_TOKEN production
+vercel --prod
+
+# 3. Load your people into the hosted copy
+TURSO_DATABASE_URL=... TURSO_AUTH_TOKEN=... npm run network:import -- people.csv
+```
+
+The schema creates itself on first connection, so there is no migration step.
+Leave the Turso variables out of `.env.local` and local dev keeps using the
+local file, which is the sane way to work: experiment locally, and only point
+at the hosted copy when you mean to.
 
 **Reminder emails.**
 
@@ -60,7 +90,8 @@ credentials the script prints the digest instead of sending it. Nobody gets
 flagged twice inside `NETWORK_COOLDOWN_DAYS` (default 7), so a weekly cron will
 not nag you about the same person every run.
 
-Weekly, Monday at 9am, via `crontab -e`:
+The script reads the same env as the app, so with the Turso variables exported
+it reminds you about the hosted copy. Weekly, Monday at 9am, via `crontab -e`:
 
 ```
 0 9 * * 1 cd /Users/parthgoda/Downloads/parthgoda.com && /Users/parthgoda/.local/bin/npm run network:remind >> /tmp/network-remind.log 2>&1

@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // better-sqlite3 is a native module; it has to stay outside the bundle.
-  serverExternalPackages: ["better-sqlite3"],
+  // libSQL ships native bindings for the local-file driver; keep them out of
+  // the bundle so the same code runs against Turso in production.
+  serverExternalPackages: ["@libsql/client", "libsql"],
 };
 
 export default nextConfig;

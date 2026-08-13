@@ -89,12 +89,12 @@ function readPerson(fd: FormData): PersonInput {
 export async function createPersonAction(fd: FormData) {
   const input = readPerson(fd);
   if (!str(fd, "name")) return;
-  const id = createPerson(input);
+  const id = await createPerson(input);
 
   // Optional "we last spoke on" shortcut on the add form.
   const lastSpoke = str(fd, "last_contact");
   if (lastSpoke) {
-    logInteraction({
+    await logInteraction({
       person_id: id,
       occurred_on: lastSpoke,
       direction: "outbound",
@@ -111,7 +111,7 @@ export async function createPersonAction(fd: FormData) {
 export async function updatePersonAction(fd: FormData) {
   const id = num(fd, "id");
   if (!id) return;
-  updatePerson(id, readPerson(fd));
+  await updatePerson(id, readPerson(fd));
   refresh(id);
   redirect(`/network/people/${id}`);
 }
@@ -119,7 +119,7 @@ export async function updatePersonAction(fd: FormData) {
 export async function deletePersonAction(fd: FormData) {
   const id = num(fd, "id");
   if (!id) return;
-  deletePerson(id);
+  await deletePerson(id);
   refresh();
   redirect("/network/people");
 }
@@ -127,7 +127,7 @@ export async function deletePersonAction(fd: FormData) {
 export async function archiveAction(fd: FormData) {
   const id = num(fd, "id");
   if (!id) return;
-  setArchived(id, str(fd, "archived") === "1");
+  await setArchived(id, str(fd, "archived") === "1");
   refresh(id);
 }
 
@@ -135,7 +135,7 @@ export async function snoozeAction(fd: FormData) {
   const id = num(fd, "id");
   if (!id) return;
   const days = num(fd, "days") ?? 30;
-  snoozePerson(id, days > 0 ? addDays(todayISO(), days) : null);
+  await snoozePerson(id, days > 0 ? addDays(todayISO(), days) : null);
   refresh(id);
 }
 
@@ -144,7 +144,7 @@ export async function snoozeAction(fd: FormData) {
 export async function logInteractionAction(fd: FormData) {
   const personId = num(fd, "person_id");
   if (!personId) return;
-  logInteraction({
+  await logInteraction({
     person_id: personId,
     occurred_on: str(fd, "occurred_on") ?? todayISO(),
     direction: oneOf<Direction>(fd, "direction", DIRECTIONS, "outbound"),
@@ -159,7 +159,7 @@ export async function logInteractionAction(fd: FormData) {
 export async function quickLogAction(fd: FormData) {
   const personId = num(fd, "person_id");
   if (!personId) return;
-  logInteraction({
+  await logInteraction({
     person_id: personId,
     occurred_on: todayISO(),
     direction: "outbound",
@@ -174,7 +174,7 @@ export async function markRespondedAction(fd: FormData) {
   const id = num(fd, "id");
   const personId = num(fd, "person_id");
   if (!id) return;
-  markResponded(id, str(fd, "responded") === "1");
+  await markResponded(id, str(fd, "responded") === "1");
   refresh(personId ?? undefined);
 }
 
@@ -182,7 +182,7 @@ export async function deleteInteractionAction(fd: FormData) {
   const id = num(fd, "id");
   const personId = num(fd, "person_id");
   if (!id) return;
-  deleteInteraction(id);
+  await deleteInteraction(id);
   refresh(personId ?? undefined);
 }
 

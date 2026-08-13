@@ -15,7 +15,7 @@
 import fs from "fs";
 import path from "path";
 import { loadEnv } from "./_env";
-import { getDb } from "../lib/network/db";
+import { queryOne } from "../lib/network/db";
 import {
   createPerson,
   logInteraction,
@@ -105,7 +105,7 @@ function toDate(raw: string | undefined): string | null {
   return null;
 }
 
-function main() {
+async function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes("--dry-run");
   const file = args.find((a) => !a.startsWith("--"));
@@ -128,10 +128,8 @@ function main() {
   }
 
   const headers = rows[0].map(normaliseHeader);
-  const db = getDb();
-  const findExisting = db.prepare(
-    "SELECT id FROM people WHERE LOWER(name) = LOWER(?) AND COALESCE(LOWER(email),'') = COALESCE(LOWER(?),'')",
-  );
+  const FIND_EXISTING =
+    "SELECT id FROM people WHERE LOWER(name) = LOWER(?) AND COALESCE(LOWER(email),'') = COALESCE(LOWER(?),'')";
 
   let created = 0;
   let updated = 0;
@@ -176,7 +174,10 @@ function main() {
       snooze_until: null,
     };
 
-    const existing = findExisting.get(name, email) as { id: number } | undefined;
+    const existing = await queryOne<{ id: number }>(FIND_EXISTING, [
+      name,
+      email,
+    ]);
 
     if (dryRun) {
       if (existing) updated++;
@@ -186,11 +187,11 @@ function main() {
 
     let id: number;
     if (existing) {
-      updatePerson(existing.id, person);
+      await updatePerson(existing.id, person);
       id = existing.id;
       updated++;
     } else {
-      id = createPerson(person);
+      id = await createPerson(person);
       created++;
     }
 
@@ -198,7 +199,7 @@ function main() {
     // for fresh rows, so re-imports do not stack duplicate history.
     const last = toDate(cell("last_contact") ?? cell("last_contacted"));
     if (last && !existing) {
-      logInteraction({
+      await logInteraction({
         person_id: id,
         occurred_on: last,
         direction: "outbound",
@@ -219,4 +220,7 @@ function main() {
   if (dryRun) console.log("Nothing was written. Drop --dry-run to commit.");
 }
 
-main();
+main().catch((err) => {
+  console.error(err instanceof Error ? err.message : err);
+  process.exit(1);
+});

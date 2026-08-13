@@ -1,0 +1,3 @@
+name,email,phone,linkedin,company,role,location,gender,where_met,met_year,closeness,cadence_days,tags,notes,last_contact
+Jane Doe,jane@example.com,+91 98200 00000,https://linkedin.com/in/janedoe,Formlabs,Solutions Engineer,Boston,female,Formlabs,2022,2,45,"work, mentor","Ran the EMEA rollout with me. Ask about the Milan office.",2026-05-14
+Sam Rivera,sam@example.com,,samrivera,,Founder,Bangalore,unspecified,IIM Bangalore,2024,3,,"mba, founder",Wants an intro to the Patreon team.,12/03/2026

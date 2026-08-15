@@ -9,7 +9,8 @@
     "lint": "eslint",
     "generate": "tsx scripts/generate-post.ts",
     "network:remind": "tsx scripts/network-reminders.ts",
-    "network:import": "tsx scripts/network-import.ts"
+    "network:import": "tsx scripts/network-import.ts",
+    "generate:map": "tsx scripts/generate-world-map.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
@@ -34,9 +35,12 @@
     "@types/nodemailer": "^8.0.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/topojson-client": "^3.1.5",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "topojson-client": "^3.1.0",
+    "typescript": "^5",
+    "world-atlas": "^2.0.2"
   }
 }

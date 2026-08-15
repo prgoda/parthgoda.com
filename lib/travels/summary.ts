@@ -1,0 +1,155 @@
+import { PLACES } from "./data";
+import { haversineKm, project } from "./projection";
+import type { Leg, Place, Trip } from "./types";
+
+export function place(id: string): Place {
+  const found = PLACES[id];
+  if (!found) throw new Error(`Unknown place: ${id}`);
+  return found;
+}
+
+export function legKm(leg: Leg): number {
+  const a = place(leg.from);
+  const b = place(leg.to);
+  return haversineKm([a.lon, a.lat], [b.lon, b.lat]);
+}
+
+export interface Waypoint {
+  place: Place;
+  /** Order along the route, starting at 1. */
+  index: number;
+  arrival?: Leg;
+  departure?: Leg;
+  /**
+   * Somewhere you changed planes rather than somewhere you went: arrived and
+   * left again on the same day.
+   */
+  layover: boolean;
+}
+
+/** Every stop in order, collapsing the repeated visits to Madrid into one. */
+export function waypointsFor(legs: Leg[]): Waypoint[] {
+  const ordered: { id: string; arrival?: Leg; departure?: Leg }[] = [];
+
+  legs.forEach((leg, i) => {
+    if (i === 0) ordered.push({ id: leg.from, departure: leg });
+    const last = ordered[ordered.length - 1];
+    if (last && last.id === leg.from && !last.departure) last.departure = leg;
+    ordered.push({ id: leg.to, arrival: leg });
+  });
+
+  const seen = new Map<string, Waypoint>();
+  const result: Waypoint[] = [];
+
+  for (const stop of ordered) {
+    const existing = seen.get(stop.id);
+    if (existing) {
+      // Madrid is visited twice; keep one dot but remember the later departure.
+      existing.departure = stop.departure ?? existing.departure;
+      continue;
+    }
+    const wp: Waypoint = {
+      place: place(stop.id),
+      index: result.length + 1,
+      arrival: stop.arrival,
+      departure: stop.departure,
+      layover: false,
+    };
+    seen.set(stop.id, wp);
+    result.push(wp);
+  }
+
+  // Fill in departures for stops that were only recorded as arrivals.
+  for (const wp of result) {
+    if (!wp.departure) {
+      wp.departure = legs.find((l) => l.from === wp.place.id);
+    }
+    wp.layover = Boolean(
+      wp.arrival && wp.departure && wp.arrival.arriveDate === undefined &&
+        wp.arrival.date === wp.departure.date,
+    );
+  }
+
+  return result;
+}
+
+export function waypoints(trip: Trip): Waypoint[] {
+  return waypointsFor(trip.legs);
+}
+
+export interface TripStats {
+  totalKm: number;
+  flightKm: number;
+  trainKm: number;
+  flights: number;
+  trains: number;
+  countries: string[];
+  stops: number;
+  layovers: number;
+  days: number;
+  longest: { leg: Leg; km: number };
+  unbooked: number;
+}
+
+export function tripStats(trip: Trip): TripStats {
+  const withKm = trip.legs.map((leg) => ({ leg, km: legKm(leg) }));
+  const points = waypoints(trip);
+
+  const sum = (mode: Leg["mode"]) =>
+    withKm.filter((l) => l.leg.mode === mode).reduce((n, l) => n + l.km, 0);
+
+  const days =
+    Math.round(
+      (Date.parse(`${trip.end}T00:00:00Z`) - Date.parse(`${trip.start}T00:00:00Z`)) /
+        86_400_000,
+    ) + 1;
+
+  return {
+    totalKm: withKm.reduce((n, l) => n + l.km, 0),
+    flightKm: sum("flight"),
+    trainKm: sum("train"),
+    flights: trip.legs.filter((l) => l.mode === "flight").length,
+    trains: trip.legs.filter((l) => l.mode === "train").length,
+    countries: [...new Set(points.map((p) => p.place.country))],
+    stops: points.filter((p) => !p.layover).length,
+    layovers: points.filter((p) => p.layover).length,
+    days,
+    longest: withKm.reduce((a, b) => (b.km > a.km ? b : a)),
+    unbooked: trip.legs.filter((l) => l.unbooked).length,
+  };
+}
+
+/** The drawing window: every place on these legs, plus breathing room. */
+export function viewBoxFor(legs: Leg[], padding = 90) {
+  const points = waypointsFor(legs).map((w) => project(w.place.lon, w.place.lat));
+  const xs = points.map((p) => p[0]);
+  const ys = points.map((p) => p[1]);
+
+  const minX = Math.min(...xs) - padding;
+  const maxX = Math.max(...xs) + padding;
+  const minY = Math.min(...ys) - padding;
+  const maxY = Math.max(...ys) + padding;
+
+  return {
+    x: minX,
+    y: minY,
+    width: maxX - minX,
+    height: maxY - minY,
+    toString() {
+      return `${minX} ${minY} ${maxX - minX} ${maxY - minY}`;
+    },
+  };
+}
+
+export function formatKm(km: number): string {
+  return km >= 1000 ? `${(km / 1000).toFixed(1)}k` : String(km);
+}
+
+export function formatTripDate(iso: string): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    timeZone: "UTC",
+  });
+}

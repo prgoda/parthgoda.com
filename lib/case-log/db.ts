@@ -25,6 +25,16 @@ export function isRemote(): boolean {
   return !connectionUrl().startsWith("file:");
 }
 
+/**
+ * A local file is the right default in dev and impossible in production:
+ * Vercel's filesystem is read-only and thrown away between invocations, so
+ * creating the schema there fails and every page that reads would 500. Detect
+ * that up front and show the reason instead.
+ */
+export function storageConfigured(): boolean {
+  return process.env.NODE_ENV !== "production" || isRemote();
+}
+
 const SCHEMA: string[] = [
   `CREATE TABLE IF NOT EXISTS cases (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,

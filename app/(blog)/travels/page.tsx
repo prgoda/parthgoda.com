@@ -7,7 +7,6 @@ import {
   formatTripDate,
   place,
   tripStats,
-  waypoints,
 } from "@/lib/travels/summary";
 
 /**

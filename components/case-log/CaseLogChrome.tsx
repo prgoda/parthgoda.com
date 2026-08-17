@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { logoutAction } from "@/app/case-log/actions";
+import { lockAction } from "@/app/case-log/actions";
 
 const ITEMS = [
   { label: "Dashboard", href: "/case-log" },
@@ -10,9 +10,9 @@ const ITEMS = [
   { label: "Log", href: "/case-log/cases/new" },
 ];
 
-export default function CaseLogChrome() {
+export default function CaseLogChrome({ canWrite }: { canWrite: boolean }) {
   const pathname = usePathname();
-  if (pathname === "/case-log/login") return null;
+  if (pathname === "/case-log/unlock") return null;
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-zinc-200">
@@ -55,14 +55,24 @@ export default function CaseLogChrome() {
           >
             Back to site
           </Link>
-          <form action={logoutAction}>
-            <button
-              type="submit"
+          {canWrite ? (
+            <form action={lockAction}>
+              <button
+                type="submit"
+                title="Lock writing again"
+                className="text-xs text-zinc-400 hover:text-zinc-700 transition-colors"
+              >
+                Lock
+              </button>
+            </form>
+          ) : (
+            <Link
+              href="/case-log/unlock"
               className="text-xs text-zinc-400 hover:text-zinc-700 transition-colors"
             >
-              Lock
-            </button>
-          </form>
+              Unlock
+            </Link>
+          )}
         </div>
       </div>
     </header>

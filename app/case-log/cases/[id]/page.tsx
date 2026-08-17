@@ -16,6 +16,7 @@ import {
   scoreTone,
 } from "@/lib/case-log/scoring";
 import { getCase, previousCase } from "@/lib/case-log/queries";
+import { canWrite } from "@/lib/case-log/session";
 import {
   DIMENSIONS,
   DIMENSION_META,
@@ -76,6 +77,7 @@ export default async function CaseDetailPage({
   if (!entry) notFound();
 
   const previous = await previousCase(entry);
+  const writable = await canWrite();
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
@@ -105,23 +107,25 @@ export default async function CaseDetailPage({
             {entry.title}
           </h1>
         </div>
-        <div className="flex items-center gap-2">
-          <Link
-            href={`/case-log/cases/${entry.id}/edit`}
-            className={ghostButtonClass}
-          >
-            Edit
-          </Link>
-          <form action={deleteCaseAction}>
-            <input type="hidden" name="id" value={entry.id} />
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:border-red-300 hover:bg-red-50"
+        {writable && (
+          <div className="flex items-center gap-2">
+            <Link
+              href={`/case-log/cases/${entry.id}/edit`}
+              className={ghostButtonClass}
             >
-              Delete
-            </button>
-          </form>
-        </div>
+              Edit
+            </Link>
+            <form action={deleteCaseAction}>
+              <input type="hidden" name="id" value={entry.id} />
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:border-red-300 hover:bg-red-50"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+        )}
       </header>
 
       <Card className="p-5">
@@ -214,14 +218,16 @@ export default async function CaseDetailPage({
       ) : (
         <Card className="p-5 text-sm text-zinc-500">
           {entry.role === "interviewer"
-            ? "You gave this one, so there is nothing to self-score."
+            ? "Given, not taken, so there is nothing to self-score."
             : "This rep was not scored."}{" "}
-          <Link
-            href={`/case-log/cases/${entry.id}/edit`}
-            className="text-zinc-900 underline"
-          >
-            {entry.role === "interviewer" ? "Edit the case" : "Score it now"}
-          </Link>
+          {writable && (
+            <Link
+              href={`/case-log/cases/${entry.id}/edit`}
+              className="text-zinc-900 underline"
+            >
+              {entry.role === "interviewer" ? "Edit the case" : "Score it now"}
+            </Link>
+          )}
         </Card>
       )}
 

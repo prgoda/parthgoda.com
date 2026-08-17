@@ -5,7 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/network", "/case-log"],
+      // /case-log is public and crawlable; only its write screens are locked.
+      disallow: ["/network"],
     },
   };
 }

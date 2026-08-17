@@ -12,6 +12,7 @@ import {
   distinctSources,
   listCases,
 } from "@/lib/case-log/queries";
+import { canWrite } from "@/lib/case-log/session";
 import {
   CASE_TYPES,
   CASE_TYPE_LABELS,
@@ -80,9 +81,10 @@ export default async function CasesPage({
       (sp.sort as "recent" | "oldest" | "best" | "worst" | "type") ?? "recent",
   });
 
-  const [partners, sources] = await Promise.all([
+  const [partners, sources, writable] = await Promise.all([
     distinctPartners(),
     distinctSources(),
+    canWrite(),
   ]);
 
   const average = mean(
@@ -117,9 +119,11 @@ export default async function CasesPage({
           >
             {weakOnly ? "Show everything" : "Show weak reps"}
           </Link>
-          <Link href="/case-log/cases/new" className={buttonClass}>
-            Log a case
-          </Link>
+          {writable && (
+            <Link href="/case-log/cases/new" className={buttonClass}>
+              Log a case
+            </Link>
+          )}
         </div>
       </header>
 
@@ -224,12 +228,14 @@ export default async function CasesPage({
               : "Log the next case you practice and this list starts filling in."
           }
           cta={
-            <Link
-              href={filtered ? "/case-log/cases" : "/case-log/cases/new"}
-              className={buttonClass}
-            >
-              {filtered ? "Clear filters" : "Log a case"}
-            </Link>
+            (filtered || writable) && (
+              <Link
+                href={filtered ? "/case-log/cases" : "/case-log/cases/new"}
+                className={buttonClass}
+              >
+                {filtered ? "Clear filters" : "Log a case"}
+              </Link>
+            )
           }
         />
       ) : (

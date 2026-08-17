@@ -109,8 +109,8 @@ duplicating.
 
 ## /case-log — case interview practice log
 
-A hidden dashboard for logging every case you practice, taken or given. Same
-treatment as `/network`: unlinked, `noindex`, blocked in `robots.txt`. Open
+A public dashboard of every case practiced, taken or given, linked from the main
+nav. Anyone can read it; only the PIN holder can write to it. Open
 [http://localhost:3000/case-log](http://localhost:3000/case-log).
 
 **What it tracks.** One row per rep: the prompt, the case type, who ran it, the
@@ -134,17 +134,28 @@ table names do not collide — or set `CASELOG_TURSO_DATABASE_URL` and
 `CASELOG_TURSO_AUTH_TOKEN` to give it a separate database. The schema creates
 itself on first connection.
 
-**Locking it.** Set `CASELOG_PASSPHRASE` (and `CASELOG_SECRET` for the cookie
-salt) and `/case-log` redirects to a passphrase screen for 30 days at a time.
-Leave it empty and the log is open in dev and returns **404 in production**, so
-an unconfigured deploy cannot expose it — which also means a production deploy
-without `CASELOG_PASSPHRASE` set makes the route look missing rather than broken:
+**Who can write.** Reading is open to everyone. Adding, editing and deleting
+need a 4-digit PIN: set `CASELOG_PIN` (plus `CASELOG_SECRET` for the cookie
+salt), then hit **Unlock** in the case-log header and type it. The writer cookie
+lasts 30 days; **Lock** clears it.
+
+Enforcement lives in two places on purpose. `proxy.ts` redirects the write
+*screens* to `/case-log/unlock`, and every mutating server action re-checks the
+cookie through `canWrite()` in `lib/case-log/session.ts`. Only the second one is
+security — server actions are callable by anyone who reads the page's JS, so
+hiding a button proves nothing. Keep that check in any new action.
+
+With no `CASELOG_PIN` set, writing is open in dev and **closed in production**,
+so an unconfigured deploy is read-only rather than a public whiteboard.
 
 ```bash
-vercel env add CASELOG_PASSPHRASE production
+vercel env add CASELOG_PIN production
 vercel env add CASELOG_SECRET production
 vercel --prod
 ```
+
+A 4-digit PIN is a 10,000-value space with no rate limiting in front of it. It
+stops drive-by edits and casual visitors, not somebody who decides to script it.
 
 ## Deploy on Vercel
 

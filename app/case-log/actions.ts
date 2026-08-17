@@ -3,13 +3,18 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { CASELOG_COOKIE, passphrase, tokenFor } from "@/lib/case-log/auth";
+import {
+  CASELOG_COOKIE,
+  tokenFor,
+  writePin,
+} from "@/lib/case-log/auth";
 import {
   createCase,
   deleteCase,
   updateCase,
   type CaseInput,
 } from "@/lib/case-log/queries";
+import { canWrite } from "@/lib/case-log/session";
 import { parseDrills } from "@/lib/case-log/scoring";
 import {
   CASE_TYPES,
@@ -117,7 +122,19 @@ function readCase(fd: FormData): CaseInput {
 
 // ── cases ───────────────────────────────────────────────────────────────────
 
+/**
+ * Every mutation starts here. Server actions are reachable by anyone who can
+ * read the page's JavaScript, so hiding the buttons proves nothing: this is the
+ * check that actually keeps the public log from being publicly editable.
+ */
+async function requireWriter(next: string): Promise<void> {
+  if (!(await canWrite())) {
+    redirect(`/case-log/unlock?next=${encodeURIComponent(next)}`);
+  }
+}
+
 export async function createCaseAction(fd: FormData) {
+  await requireWriter("/case-log/cases/new");
   const newId = await createCase(readCase(fd));
   refresh(newId);
   redirect(`/case-log/cases/${newId}`);
@@ -126,6 +143,7 @@ export async function createCaseAction(fd: FormData) {
 export async function updateCaseAction(fd: FormData) {
   const caseId = id(fd);
   if (!caseId) redirect("/case-log/cases");
+  await requireWriter(`/case-log/cases/${caseId}/edit`);
   await updateCase(caseId, readCase(fd));
   refresh(caseId);
   redirect(`/case-log/cases/${caseId}`);
@@ -133,6 +151,7 @@ export async function updateCaseAction(fd: FormData) {
 
 export async function deleteCaseAction(fd: FormData) {
   const caseId = id(fd);
+  await requireWriter(caseId ? `/case-log/cases/${caseId}` : "/case-log/cases");
   if (caseId) {
     await deleteCase(caseId);
     refresh();
@@ -140,34 +159,33 @@ export async function deleteCaseAction(fd: FormData) {
   redirect("/case-log/cases");
 }
 
-// ── lock ────────────────────────────────────────────────────────────────────
+// ── the write lock ──────────────────────────────────────────────────────────
 
-export async function loginAction(fd: FormData) {
-  const secret = passphrase();
-  const attempt = str(fd, "passphrase") ?? "";
+export async function unlockAction(fd: FormData) {
+  const pin = writePin();
+  const attempt = str(fd, "pin") ?? "";
   const next = str(fd, "next") ?? "/case-log";
+  const safeNext = next.startsWith("/case-log") ? next : "/case-log";
 
-  if (!secret || attempt !== secret) {
+  if (!pin || attempt !== pin) {
     redirect(
-      `/case-log/login?error=1${
-        next !== "/case-log" ? `&next=${encodeURIComponent(next)}` : ""
-      }`,
+      `/case-log/unlock?error=1&next=${encodeURIComponent(safeNext)}`,
     );
   }
 
   const jar = await cookies();
-  jar.set(CASELOG_COOKIE, await tokenFor(secret), {
+  jar.set(CASELOG_COOKIE, await tokenFor(pin), {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
   });
-  redirect(next.startsWith("/case-log") ? next : "/case-log");
+  redirect(safeNext);
 }
 
-export async function logoutAction() {
+export async function lockAction() {
   const jar = await cookies();
   jar.delete(CASELOG_COOKIE);
-  redirect("/case-log/login");
+  redirect("/case-log");
 }

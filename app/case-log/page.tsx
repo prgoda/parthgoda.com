@@ -18,6 +18,7 @@ import {
   scoreTone,
 } from "@/lib/case-log/scoring";
 import { caseLogStats } from "@/lib/case-log/queries";
+import { canWrite } from "@/lib/case-log/session";
 import {
   CASE_TYPE_LABELS,
   DIMENSION_META,
@@ -50,6 +51,7 @@ function trendCopy(last: number | null, prev: number | null) {
 
 export default async function CaseLogDashboard() {
   const stats = await caseLogStats();
+  const writable = await canWrite();
   const today = todayISO();
 
   if (stats.totalCases === 0) {
@@ -59,8 +61,11 @@ export default async function CaseLogDashboard() {
           title="No cases logged yet"
           body="Log every case you take and every case you give. Score the five things partners actually grade, write down the one thing to fix, and this page starts telling you where you are losing points."
           cta={
-            <Link href="/case-log/cases/new" className={buttonClass}>
-              Log your first case
+            <Link
+              href={writable ? "/case-log/cases/new" : "/case-log/unlock"}
+              className={buttonClass}
+            >
+              {writable ? "Log your first case" : "Unlock to log a case"}
             </Link>
           }
         />
@@ -105,9 +110,11 @@ export default async function CaseLogDashboard() {
                 : `Last one ${humanGap(daysSinceLast)}.`}
           </p>
         </div>
-        <Link href="/case-log/cases/new" className={buttonClass}>
-          Log a case
-        </Link>
+        {writable && (
+          <Link href="/case-log/cases/new" className={buttonClass}>
+            Log a case
+          </Link>
+        )}
       </header>
 
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

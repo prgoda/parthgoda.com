@@ -8,10 +8,10 @@ const NAV_ITEMS = [
   { label: "AI", href: "/category/ai" },
   { label: "MBA Life", href: "/category/mba-life" },
   { label: "Music", href: "/category/music" },
-  { label: "Resume", href: "/resume" },
+  // Resume is hidden from the nav; /resume still resolves by direct link.
   { label: "Travels", href: "/travels" },
-  { label: "Newsletter", href: "/newsletter" },
-  { label: "FDE", href: "/forward-deployed-engineer" },
+  // Public link into a passphrase-gated route: visitors hit the unlock screen.
+  { label: "Case Log", href: "/case-log" },
   { label: "Ritual AI", href: "https://ritual-web-app.vercel.app/", external: true },
 ];
 

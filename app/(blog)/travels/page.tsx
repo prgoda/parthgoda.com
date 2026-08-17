@@ -10,6 +10,12 @@ import {
   waypoints,
 } from "@/lib/travels/summary";
 
+/**
+ * Which stops belong on the zoomed European map. Both ends of a leg have to be
+ * in here, otherwise the flight home would stretch the frame back to Chicago.
+ */
+const EUROPE = ["mad", "svq", "spu", "beg", "krk", "hel"];
+
 export const metadata: Metadata = {
   title: "Travels",
   description:
@@ -55,9 +61,11 @@ export default function TravelsPage() {
 
       {TRIPS.map((trip) => {
         const stats = tripStats(trip);
-        const stops = waypoints(trip);
-        const first = stops[0].place;
-        const last = stops[stops.length - 1].place;
+        // Taken from the legs, not the deduplicated stop list: the trip ends
+        // back in Chicago, which the map already drew on the way out.
+        const first = place(trip.legs[0].from);
+        const last = place(trip.legs[trip.legs.length - 1].to);
+        const gaps = trip.legs.filter((l) => l.unbooked);
 
         return (
           <article key={trip.slug} className="mb-16">
@@ -95,12 +103,12 @@ export default function TravelsPage() {
                 The European stretch, closer up
               </h3>
               <TripMap
-                legs={trip.legs.filter((l) =>
-                  ["mad", "svq", "spu", "beg"].includes(l.from),
+                legs={trip.legs.filter(
+                  (l) => EUROPE.includes(l.from) && EUROPE.includes(l.to),
                 )}
                 showCodes
                 padding={26}
-                label="Map of the European legs from Madrid to Belgrade"
+                label="Map of the European legs from Madrid to Helsinki"
               />
             </figure>
 
@@ -108,7 +116,9 @@ export default function TravelsPage() {
               <Stat
                 value={`${formatKm(stats.totalKm)} km`}
                 label="Distance"
-                sub={`${formatKm(stats.flightKm)} in the air, ${stats.trainKm} by rail`}
+                sub={`${formatKm(stats.flightKm)} in the air, ${stats.trainKm} by rail, ${formatKm(
+                  stats.unbookedKm,
+                )} still open`}
               />
               <Stat
                 value={String(stats.days)}
@@ -143,16 +153,26 @@ export default function TravelsPage() {
               <p className="mt-2 text-zinc-600 leading-relaxed">
                 {place(stats.longest.leg.from).name} to{" "}
                 {place(stats.longest.leg.to).name},{" "}
-                {stats.longest.km.toLocaleString("en-GB")} km overnight. That
-                single leg is{" "}
+                {stats.longest.km.toLocaleString("en-GB")} km in a single hop.
+                That one leg is{" "}
                 {Math.round((stats.longest.km / stats.totalKm) * 100)}% of the
                 whole trip.
               </p>
-              {stats.unbooked > 0 && (
-                <p className="mt-4 border-t border-zinc-200 pt-4 text-sm text-zinc-500">
-                  One gap left: getting back from Seville to Madrid before the
-                  Split flight on {formatTripDate("2026-09-05")}.
-                </p>
+              {gaps.length > 0 && (
+                <div className="mt-4 border-t border-zinc-200 pt-4 text-sm text-zinc-500">
+                  <p>
+                    {gaps.length === 1 ? "One gap" : `${gaps.length} gaps`} still
+                    to close:
+                  </p>
+                  <ul className="mt-1.5 space-y-1">
+                    {gaps.map((leg, i) => (
+                      <li key={i}>
+                        {place(leg.from).name} to {place(leg.to).name},{" "}
+                        {leg.dateLabel ?? formatTripDate(leg.date)}.
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </section>
           </article>

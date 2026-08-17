@@ -18,8 +18,17 @@ function entries(trip: Trip): Entry[] {
   );
 }
 
-function ModeIcon({ mode }: { mode: Leg["mode"] }) {
-  return mode === "flight" ? (
+function ModeIcon({ leg }: { leg: Leg }) {
+  if (leg.modeUnknown) {
+    return (
+      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
+        <circle cx="6" cy="12" r="2" />
+        <circle cx="12" cy="12" r="2" />
+        <circle cx="18" cy="12" r="2" />
+      </svg>
+    );
+  }
+  return leg.mode === "flight" ? (
     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
       <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5L21 16z" />
     </svg>
@@ -44,7 +53,7 @@ function LegRow({ leg }: { leg: Leg }) {
             : "bg-zinc-900 text-white"
         }`}
       >
-        <ModeIcon mode={leg.mode} />
+        <ModeIcon leg={leg} />
       </span>
       <span className="absolute left-3 top-8 bottom-0 w-px bg-zinc-200" />
 
@@ -53,7 +62,7 @@ function LegRow({ leg }: { leg: Leg }) {
           {from.name} to {to.name}
         </h3>
         <span className="text-xs font-semibold uppercase tracking-widest text-zinc-400">
-          {formatTripDate(leg.date)}
+          {leg.dateLabel ?? formatTripDate(leg.date)}
           {leg.dateEstimated && "*"}
         </span>
       </div>

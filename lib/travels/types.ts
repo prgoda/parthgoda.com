@@ -21,8 +21,10 @@ export interface Leg {
   from: string;
   to: string;
   mode: LegMode;
-  /** ISO date of departure. */
+  /** ISO date of departure. Sorts the timeline even when the day is not fixed. */
   date: string;
+  /** Shown instead of the date, for legs that float inside a range. */
+  dateLabel?: string;
   depart?: string;
   arrive?: string;
   /** Set only when the leg lands on a later date than it left. */
@@ -31,6 +33,11 @@ export interface Leg {
   number?: string;
   /** A leg the itinerary needs but no booking covers yet. */
   unbooked?: boolean;
+  /**
+   * The route is certain but how you cover it is not. `mode` still drives the
+   * map geometry; this stops the page claiming a plane or a train.
+   */
+  modeUnknown?: boolean;
   /** The booking showed no date; this one is inferred from the legs around it. */
   dateEstimated?: boolean;
   note?: string;

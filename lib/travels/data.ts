@@ -11,17 +11,21 @@ export const PLACES: Record<string, Place> = {
   mad: { id: "mad", name: "Madrid", country: "Spain", code: "MAD", lon: -3.567, lat: 40.472, anchor: "n" },
   svq: { id: "svq", name: "Seville", country: "Spain", lon: -5.975, lat: 37.392, anchor: "s" },
   spu: { id: "spu", name: "Split", country: "Croatia", code: "SPU", lon: 16.298, lat: 43.539, anchor: "s" },
-  beg: { id: "beg", name: "Belgrade", country: "Serbia", code: "BEG", lon: 20.309, lat: 44.819, anchor: "n" },
+  // Krakow sits almost due north of Belgrade, so the two labels are pushed to
+  // opposite sides to keep them apart.
+  beg: { id: "beg", name: "Belgrade", country: "Serbia", code: "BEG", lon: 20.309, lat: 44.819, anchor: "e" },
+  krk: { id: "krk", name: "Krakow", country: "Poland", code: "KRK", lon: 19.785, lat: 50.078, anchor: "w" },
+  hel: { id: "hel", name: "Helsinki", country: "Finland", code: "HEL", lon: 24.963, lat: 60.317, anchor: "n" },
 };
 
 export const TRIPS: Trip[] = [
   {
     slug: "2026-belize-spain-balkans",
-    title: "Belize, Spain, the Balkans",
+    title: "Belize, Spain, the Balkans, home the long way",
     blurb:
-      "Three weeks going west to east: out of San Francisco, down to the Caribbean coast, across the Atlantic overnight, then a slow drift from Madrid to Belgrade.",
+      "Five weeks going west to east and then all the way back: out of San Francisco, down to the Caribbean coast, across the Atlantic overnight, a slow drift from Madrid to Belgrade, and home into Chicago over the top of the world from Helsinki.",
     start: "2026-08-22",
-    end: "2026-09-13",
+    end: "2026-09-25",
     legs: [
       {
         from: "sfo",
@@ -114,6 +118,39 @@ export const TRIPS: Trip[] = [
         arrive: "16:20",
         carrier: "Air Serbia",
         number: "JU 703",
+      },
+      {
+        from: "beg",
+        to: "krk",
+        // Dated the day after Belgrade so it sorts into the right slot; the
+        // label is what actually gets shown.
+        date: "2026-09-14",
+        dateLabel: "14 to 25 Sept",
+        mode: "flight",
+        unbooked: true,
+        modeUnknown: true,
+        note: "Twelve open days between landing in Belgrade and flying home out of Krakow, with nothing booked to cover the ground between them.",
+      },
+      {
+        from: "krk",
+        to: "hel",
+        mode: "flight",
+        date: "2026-09-25",
+        depart: "12:30",
+        arrive: "15:25",
+        carrier: "Finnair",
+        number: "AY 1166",
+      },
+      {
+        from: "hel",
+        to: "ord",
+        mode: "flight",
+        date: "2026-09-25",
+        depart: "16:25",
+        arrive: "17:50",
+        carrier: "Finnair",
+        number: "AY 009",
+        note: "1h transfer in Helsinki, then 9h 25m westbound. The clock barely moves because you are chasing the time zones home.",
       },
     ],
     stays: [

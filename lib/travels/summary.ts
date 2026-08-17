@@ -81,6 +81,8 @@ export interface TripStats {
   totalKm: number;
   flightKm: number;
   trainKm: number;
+  /** Ground you will cover with nothing booked to cover it. */
+  unbookedKm: number;
   flights: number;
   trains: number;
   countries: string[];
@@ -95,8 +97,12 @@ export function tripStats(trip: Trip): TripStats {
   const withKm = trip.legs.map((leg) => ({ leg, km: legKm(leg) }));
   const points = waypoints(trip);
 
+  // Everything below counts booked legs only. An unbooked leg still adds to the
+  // total distance, because you have to cross that ground either way, but it
+  // does not get filed under a mode of transport nobody has chosen yet.
+  const booked = withKm.filter((l) => !l.leg.unbooked);
   const sum = (mode: Leg["mode"]) =>
-    withKm.filter((l) => l.leg.mode === mode).reduce((n, l) => n + l.km, 0);
+    booked.filter((l) => l.leg.mode === mode).reduce((n, l) => n + l.km, 0);
 
   const days =
     Math.round(
@@ -108,8 +114,11 @@ export function tripStats(trip: Trip): TripStats {
     totalKm: withKm.reduce((n, l) => n + l.km, 0),
     flightKm: sum("flight"),
     trainKm: sum("train"),
-    flights: trip.legs.filter((l) => l.mode === "flight").length,
-    trains: trip.legs.filter((l) => l.mode === "train").length,
+    unbookedKm: withKm
+      .filter((l) => l.leg.unbooked)
+      .reduce((n, l) => n + l.km, 0),
+    flights: trip.legs.filter((l) => l.mode === "flight" && !l.unbooked).length,
+    trains: trip.legs.filter((l) => l.mode === "train" && !l.unbooked).length,
     countries: [...new Set(points.map((p) => p.place.country))],
     stops: points.filter((p) => !p.layover).length,
     layovers: points.filter((p) => p.layover).length,
@@ -119,24 +128,36 @@ export function tripStats(trip: Trip): TripStats {
   };
 }
 
-/** The drawing window: every place on these legs, plus breathing room. */
-export function viewBoxFor(legs: Leg[], padding = 90) {
+/**
+ * The drawing window: every place on these legs, plus breathing room. A route
+ * that runs more north-south than east-west would otherwise produce a portrait
+ * map, which reads badly in a wide column, so the window is widened until it is
+ * at least `minAspect` across.
+ */
+export function viewBoxFor(legs: Leg[], padding = 90, minAspect = 1.7) {
   const points = waypointsFor(legs).map((w) => project(w.place.lon, w.place.lat));
   const xs = points.map((p) => p[0]);
   const ys = points.map((p) => p[1]);
 
-  const minX = Math.min(...xs) - padding;
-  const maxX = Math.max(...xs) + padding;
+  let minX = Math.min(...xs) - padding;
+  let maxX = Math.max(...xs) + padding;
   const minY = Math.min(...ys) - padding;
   const maxY = Math.max(...ys) + padding;
+
+  const height = maxY - minY;
+  const shortfall = height * minAspect - (maxX - minX);
+  if (shortfall > 0) {
+    minX -= shortfall / 2;
+    maxX += shortfall / 2;
+  }
 
   return {
     x: minX,
     y: minY,
     width: maxX - minX,
-    height: maxY - minY,
+    height,
     toString() {
-      return `${minX} ${minY} ${maxX - minX} ${maxY - minY}`;
+      return `${minX} ${minY} ${maxX - minX} ${height}`;
     },
   };
 }

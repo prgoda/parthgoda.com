@@ -57,7 +57,7 @@ async function generateCoverImage(
   const prompt = `Editorial magazine cover photo for an article titled "${title}". ${excerpt} Visual style: ${IMAGE_STYLE[category]}. No text, no words, no letters in the image. High quality, professional photography.`;
 
   const response = await ai.models.generateImages({
-    model: "imagen-3.0-generate-001",
+    model: "imagen-3.0-generate-002",
     prompt,
     config: { numberOfImages: 1, outputMimeType: "image/jpeg" },
   });

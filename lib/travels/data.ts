@@ -122,14 +122,14 @@ export const TRIPS: Trip[] = [
       {
         from: "beg",
         to: "krk",
-        // Dated the day after Belgrade so it sorts into the right slot; the
-        // label is what actually gets shown.
-        date: "2026-09-14",
-        dateLabel: "14 to 25 Sept",
+        // Dated to the Belgrade checkout so it sorts after that stay; the label
+        // is what actually gets shown.
+        date: "2026-09-15",
+        dateLabel: "15 to 25 Sept",
         mode: "flight",
         unbooked: true,
         modeUnknown: true,
-        note: "Twelve open days between landing in Belgrade and flying home out of Krakow, with nothing booked to cover the ground between them.",
+        note: "Out of the Belgrade hotel on the 15th, then ten open days before the flight home leaves Krakow, with nothing booked to cover the ground between.",
       },
       {
         from: "krk",
@@ -160,6 +160,13 @@ export const TRIPS: Trip[] = [
         from: "2026-08-31",
         to: "2026-09-01",
         nights: 1,
+      },
+      {
+        placeId: "beg",
+        name: "Courtyard Marriott Belgrade City Center",
+        from: "2026-09-13",
+        to: "2026-09-15",
+        nights: 2,
       },
     ],
   },

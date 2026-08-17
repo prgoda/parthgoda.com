@@ -26,16 +26,18 @@ export default function ProjectGrid({ projects }: Props) {
             )}
           </div>
           <p className="text-sm text-zinc-600 leading-relaxed mb-3">{project.description}</p>
-          <div className="flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs px-2 py-0.5 bg-zinc-100 text-zinc-600 rounded-full"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+          {project.tags && project.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs px-2 py-0.5 bg-zinc-100 text-zinc-600 rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       ))}
     </div>

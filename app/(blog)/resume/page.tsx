@@ -4,6 +4,8 @@ import ResumeHero from "@/components/resume/ResumeHero";
 import ResumeSection from "@/components/resume/ResumeSection";
 import ExperienceList from "@/components/resume/ExperienceList";
 import EducationList from "@/components/resume/EducationList";
+import SkillsGrid from "@/components/resume/SkillsGrid";
+import ProjectGrid from "@/components/resume/ProjectGrid";
 import HobbiesArmy from "@/components/resume/HobbiesArmy";
 
 export const metadata: Metadata = {
@@ -22,6 +24,8 @@ export default function ResumePage() {
           email: resume.email,
           linkedin: resume.linkedin,
           github: resume.github,
+          location: resume.location,
+          citizenship: resume.citizenship,
         }}
       />
 
@@ -33,9 +37,27 @@ export default function ResumePage() {
         <EducationList items={resume.education} />
       </ResumeSection>
 
-      {(resume.hobbies?.length || resume.army) && (
-        <ResumeSection title="Interests & Service" animationDelay={120}>
-          <HobbiesArmy hobbies={resume.hobbies} army={resume.army} />
+      {resume.skills && resume.skills.length > 0 && (
+        <ResumeSection title="Skills" animationDelay={120}>
+          <SkillsGrid skills={resume.skills} />
+        </ResumeSection>
+      )}
+
+      {resume.projects && resume.projects.length > 0 && (
+        <ResumeSection title="Projects" animationDelay={180}>
+          <ProjectGrid projects={resume.projects} />
+        </ResumeSection>
+      )}
+
+      {(resume.certifications?.length ||
+        resume.hobbies?.length ||
+        resume.army) && (
+        <ResumeSection title="Additional" animationDelay={240}>
+          <HobbiesArmy
+            hobbies={resume.hobbies}
+            certifications={resume.certifications}
+            army={resume.army}
+          />
         </ResumeSection>
       )}
     </main>

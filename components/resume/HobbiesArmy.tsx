@@ -2,12 +2,32 @@ import type { ResumeHobby, ResumeArmy } from "@/lib/resume";
 
 interface Props {
   hobbies?: ResumeHobby[];
+  certifications?: string[];
   army?: ResumeArmy;
 }
 
-export default function HobbiesArmy({ hobbies, army }: Props) {
+export default function HobbiesArmy({ hobbies, certifications, army }: Props) {
   return (
     <div className="space-y-10">
+      {/* Certifications */}
+      {certifications && certifications.length > 0 && (
+        <div>
+          <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-4">
+            Certifications
+          </h3>
+          <div className="flex flex-wrap gap-3">
+            {certifications.map((item) => (
+              <span
+                key={item}
+                className="px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-full text-sm text-zinc-700"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Hobbies */}
       {hobbies && hobbies.length > 0 && (
         <div>

@@ -4,7 +4,17 @@ import { useEffect, useState } from "react";
 import type { ResumeData } from "@/lib/resume";
 
 interface Props {
-  data: Pick<ResumeData, "name" | "title" | "tagline" | "email" | "linkedin" | "github">;
+  data: Pick<
+    ResumeData,
+    | "name"
+    | "title"
+    | "tagline"
+    | "email"
+    | "linkedin"
+    | "github"
+    | "location"
+    | "citizenship"
+  >;
 }
 
 function useTypewriter(text: string, speed = 45) {
@@ -60,6 +70,16 @@ export default function ResumeHero({ data }: Props) {
       >
         {data.tagline}
       </p>
+
+      {(data.location || data.citizenship) && (
+        <p
+          className={`mt-4 text-sm text-zinc-400 transition-opacity duration-700 ${
+            done ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {[data.location, data.citizenship].filter(Boolean).join(" · ")}
+        </p>
+      )}
 
       {(data.email || data.linkedin || data.github) && (
         <div className="flex items-center justify-center gap-6 mt-8 text-sm text-zinc-600">

@@ -2,12 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import {
   CASELOG_COOKIE,
   tokenFor,
   writePin,
 } from "@/lib/case-log/auth";
+import { isValidFeedbackToken } from "@/lib/case-log/feedback";
 import {
   createCase,
   deleteCase,
@@ -157,6 +158,56 @@ export async function deleteCaseAction(fd: FormData) {
     refresh();
   }
   redirect("/case-log/cases");
+}
+
+// ── caser feedback, via the shared link ─────────────────────────────────────
+
+/**
+ * Submitted by whoever holds the feedback link, so it carries no writer cookie.
+ * The token in the form field is the only credential, and it is re-checked here
+ * rather than trusted from the page that rendered it.
+ *
+ * The shape is narrower than readCase() on purpose: a caser sets the scores and
+ * the words, and cannot reach the fields that would let them rewrite the log.
+ */
+export async function submitFeedbackAction(fd: FormData) {
+  const token = str(fd, "token") ?? "";
+  if (!(await isValidFeedbackToken(token))) {
+    // Same dead end an invalid link gets.
+    notFound();
+  }
+
+  const date = str(fd, "practiced_on");
+  const partner = str(fd, "partner");
+
+  const newId = await createCase({
+    practiced_on: date && date <= todayISO() ? date : todayISO(),
+    title: str(fd, "title") ?? "Case with no title",
+    prompt: null,
+    // Attribute it without letting a caser write into the source stats.
+    source: partner ? `Feedback from ${partner}` : "Feedback via link",
+    firm: null,
+    style: "unsure",
+    case_type: oneOf<CaseType>(fd, "case_type", CASE_TYPES, "other"),
+    industry: null,
+    partner,
+    // The link is for people who cased *me*, so the role is never in question.
+    role: "interviewee",
+    format: oneOf<Format>(fd, "format", FORMATS, "video"),
+    minutes: null,
+    structure: score(fd, "structure"),
+    math: score(fd, "math"),
+    insight: score(fd, "insight"),
+    synthesis: score(fd, "synthesis"),
+    presence: score(fd, "presence"),
+    went_well: str(fd, "went_well"),
+    to_fix: str(fd, "to_fix"),
+    drills: null,
+    notes: str(fd, "notes"),
+  });
+
+  refresh(newId);
+  redirect(`/case-log/feedback/${token}?done=1`);
 }
 
 // ── the write lock ──────────────────────────────────────────────────────────

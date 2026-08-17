@@ -14,6 +14,19 @@ export default function CaseLogChrome({ canWrite }: { canWrite: boolean }) {
   const pathname = usePathname();
   if (pathname === "/case-log/unlock") return null;
 
+  // A caser arriving on the feedback link gets a title and nothing to click:
+  // the dashboard and the write screens are none of their business.
+  if (pathname.startsWith("/case-log/feedback")) {
+    return (
+      <header className="bg-white border-b border-zinc-200">
+        <div className="max-w-6xl mx-auto px-4 py-3">
+          <span className="font-serif text-lg font-bold">Case log</span>
+          <span className="ml-3 text-xs text-zinc-400">Parth Goda</span>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-4 flex items-center gap-1">

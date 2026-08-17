@@ -1,5 +1,7 @@
+import { headers } from "next/headers";
 import Link from "next/link";
 import CaseRow from "@/components/case-log/CaseRow";
+import FeedbackLink from "@/components/case-log/FeedbackLink";
 import {
   Bar,
   Card,
@@ -17,6 +19,7 @@ import {
   formatOutOfTen,
   scoreTone,
 } from "@/lib/case-log/scoring";
+import { feedbackPath } from "@/lib/case-log/feedback";
 import { caseLogStats } from "@/lib/case-log/queries";
 import { canWrite } from "@/lib/case-log/session";
 import {
@@ -49,14 +52,22 @@ function trendCopy(last: number | null, prev: number | null) {
     : { text: `Down ${Math.abs(delta).toFixed(1)} vs the five before`, tone: "alert" as const };
 }
 
+/** Absolute URL, because the point of the feedback link is to be pasted elsewhere. */
+async function feedbackUrl(): Promise<string> {
+  const host = (await headers()).get("host") ?? "parthgoda.com";
+  const protocol = host.startsWith("localhost") ? "http" : "https";
+  return `${protocol}://${host}${await feedbackPath()}`;
+}
+
 export default async function CaseLogDashboard() {
   const stats = await caseLogStats();
   const writable = await canWrite();
   const today = todayISO();
+  const casersLink = writable ? await feedbackUrl() : null;
 
   if (stats.totalCases === 0) {
     return (
-      <div className="py-10">
+      <div className="space-y-6 py-10">
         <EmptyState
           title="No cases logged yet"
           body="Log every case you take and every case you give. Score the five things partners actually grade, write down the one thing to fix, and this page starts telling you where you are losing points."
@@ -69,6 +80,7 @@ export default async function CaseLogDashboard() {
             </Link>
           }
         />
+        {casersLink && <FeedbackLink url={casersLink} />}
       </div>
     );
   }
@@ -116,6 +128,8 @@ export default async function CaseLogDashboard() {
           </Link>
         )}
       </header>
+
+      {casersLink && <FeedbackLink url={casersLink} />}
 
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard

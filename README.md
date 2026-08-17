@@ -157,6 +157,23 @@ vercel --prod
 A 4-digit PIN is a 10,000-value space with no rate limiting in front of it. It
 stops drive-by edits and casual visitors, not somebody who decides to script it.
 
+**The caser feedback link.** One reusable secret URL you send to whoever cased
+you: they score the five dimensions, write what worked and what to fix, and it
+lands in the log as a new entry — no PIN on their side. Unlock the log and the
+full link sits at the top of the dashboard with a copy button; nobody else sees
+it.
+
+The token is derived from `CASELOG_SECRET`, not stored separately, so the link
+needs no extra configuration and stays stable across deploys. It is checked
+twice, in the page and again inside `submitFeedbackAction` — a forged token 404s
+and writes nothing. Rotating `CASELOG_SECRET` retires the old link, which is the
+escape hatch if it spreads further than intended.
+
+Their submission is deliberately narrower than your own form: a caser can set
+the scores, the case title and type, and the free text. It always records
+`role: interviewee`, and it cannot touch the fields that would let someone
+rewrite the log's shape.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

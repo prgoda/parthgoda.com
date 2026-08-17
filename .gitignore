@@ -40,3 +40,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Full-size photos dropped in the repo root on the way to a post. Anchored to
+# the root on purpose: the resized copies under public/images stay tracked.
+/*.jpg
+/*.jpeg
+/*.png
+/*.heic
+/*.tif
+/*.tiff

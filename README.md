@@ -107,6 +107,45 @@ npm run network:import -- people.csv
 Rows match on name + email, so re-running the same file updates instead of
 duplicating.
 
+## /case-log — case interview practice log
+
+A hidden dashboard for logging every case you practice, taken or given. Same
+treatment as `/network`: unlinked, `noindex`, blocked in `robots.txt`. Open
+[http://localhost:3000/case-log](http://localhost:3000/case-log).
+
+**What it tracks.** One row per rep: the prompt, the case type, who ran it, the
+source casebook, format and length, plus a 1–5 score on the five things
+partners actually grade — structure, math, insight, synthesis, presence. Leave a
+dimension blank and it stays blank; averages ignore it rather than counting a
+zero. Every case also takes a "what worked", a single "fix before the next one",
+and comma-separated drill tags.
+
+**What it tells you.** The dashboard ranks the five dimensions worst-first so an
+overall 7/10 cannot hide a 3 in math, tracks the last five reps against the five
+before them, counts reps per week and your practice streak, breaks scores down
+by case type and by partner, lists case types you have never attempted, surfaces
+recurring drill tags, and reads your last few "fix next time" notes back to you.
+A case detail page shows what you had said you would fix going into that rep.
+
+**Storage.** Same two-homes driver as `/network`: a local SQLite file at
+`data/case-log.db` (gitignored) with no Turso variables set, Turso in
+production. It reuses `TURSO_DATABASE_URL`/`TURSO_AUTH_TOKEN` by default — the
+table names do not collide — or set `CASELOG_TURSO_DATABASE_URL` and
+`CASELOG_TURSO_AUTH_TOKEN` to give it a separate database. The schema creates
+itself on first connection.
+
+**Locking it.** Set `CASELOG_PASSPHRASE` (and `CASELOG_SECRET` for the cookie
+salt) and `/case-log` redirects to a passphrase screen for 30 days at a time.
+Leave it empty and the log is open in dev and returns **404 in production**, so
+an unconfigured deploy cannot expose it — which also means a production deploy
+without `CASELOG_PASSPHRASE` set makes the route look missing rather than broken:
+
+```bash
+vercel env add CASELOG_PASSPHRASE production
+vercel env add CASELOG_SECRET production
+vercel --prod
+```
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

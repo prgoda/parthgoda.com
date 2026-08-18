@@ -10,8 +10,6 @@ const NAV_ITEMS = [
   { label: "Music", href: "/category/music" },
   // Resume is hidden from the nav; /resume still resolves by direct link.
   { label: "Travels", href: "/travels" },
-  // Public link into a passphrase-gated route: visitors hit the unlock screen.
-  { label: "Case Log", href: "/case-log" },
   { label: "Ritual AI", href: "https://ritual-web-app.vercel.app/", external: true },
 ];
 

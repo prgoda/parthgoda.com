@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { label: "Music", href: "/category/music" },
   // Resume is hidden from the nav; /resume still resolves by direct link.
   { label: "Travels", href: "/travels" },
+  { label: "Caselogg", href: "https://caselogg.com", external: true },
   { label: "Ritual AI", href: "https://ritual-web-app.vercel.app/", external: true },
 ];
 

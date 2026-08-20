@@ -21,6 +21,18 @@ So I started scoring five things separately: structure, maths, insight, synthesi
 
 That was the whole idea. Everything below is what it took to turn it into something other people can use.
 
+## The Friend Who Asked First
+
+None of this exists without Melvin.
+
+He asked me to case him, and he sent his case log over with the request, the way you do, so I could see what he had been drilling and where he wanted the pressure. Then he asked for mine. I did not have one. Not a thin one, not a neglected one. None. I had been practising for weeks and had recorded almost none of it.
+
+So I opened his log properly, planning to copy the format and backfill my own that evening. That is where the real problem showed itself. Reconstructing a case from memory is slow, and the parts most worth recording are precisely the parts that fade first. Every field wanted a detail I could no longer state honestly. An hour in I had three entries, two of them guesses.
+
+The reason people do not keep a case log is not discipline. It is that the log costs more than the case did.
+
+That is a build.
+
 ## Version Zero: A Page on My Own Website
 
 On 17 August I added a route to my personal site. The commit message was unglamorous: *"Add /case-log: a private log for case interview practice."*
@@ -175,6 +187,18 @@ So the caser scores seven things in the order they happen: **reaction** to the p
 Both sets are kept. They measure different things, how it felt versus how it looked, and the gap between the two averages turned out to be the most interesting number in the app. The dashboard now says things like *"You rate yourself 1.4 points out of ten higher than your casers do."* That sentence was impossible before, and it is the single most useful thing the product tells anyone.
 
 The last addition was timing. Four phases get a stopwatch: drawing the framework, explaining it, brainstorming, and the recommendation. The caser runs the clocks, for a reason that is obvious once said aloud: **a candidate cannot watch a clock and think at the same time.** Each phase is stored in seconds against a target, because "2:40 against a 2:00 target" is a drillable problem and "about three minutes" is not.
+
+## The First Person to Use It
+
+I finished on Tuesday evening and tested it that night with Melvin, which was the only fair outcome given he started it. He broke three things in one sitting.
+
+**The charts needed their own clock and their own score.** I had given exhibits a slot among the seven moments but nothing else. Melvin pointed out that reading a chart is where candidates most visibly stall, and that a score with no time next to it cannot tell you whether the read was wrong or merely slow. That distinction is the entire point of drilling it. So the four clocks became five, and reading the exhibit is now timed like everything else.
+
+**He submitted his feedback, pressed enter, and it vanished.** The form had no submit handler bound to the enter key, so the keypress did what an unhandled enter does in a browser and quietly reloaded state out from under him. He had just spent five minutes scoring me and the app threw it away without saying so. The worst class of bug: silent, and it punishes exactly the person doing you a favour.
+
+**Then I broke his case while trying to fix mine.** To reproduce the save bug I started a case for Melvin, jumped the gun, typed obvious placeholder text into the fields and submitted it to see whether anything landed. It landed perfectly. Then we ran the real case, and I could not overwrite it. Submitted meant final, with no path back to edit. I had built immutability to stop a caser rewriting history, and I had not noticed it also stops the owner correcting a record that never described anything real. His first genuine case is still sitting behind my test data in the version he used that night.
+
+None of the three came from testing. They came from a person using the thing in front of me for twenty minutes, which found more than my thirty-five assertions did, because my assertions only ever check what I already thought to worry about.
 
 ## What Got Deleted
 

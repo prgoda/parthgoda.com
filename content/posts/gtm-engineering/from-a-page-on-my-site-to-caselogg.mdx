@@ -1,0 +1,219 @@
+---
+title: "From a Page on My Site to a Product: Building Caselogg in 48 Hours"
+slug: "from-a-page-on-my-site-to-caselogg"
+date: "2026-08-19"
+category: "gtm-engineering"
+excerpt: "I built a case interview log for myself on a Sunday. By Tuesday it was a multi-user product on its own domain. Here is everything that happened in between, including the security hole that my own tests were too polite to catch."
+author: "Parth Goda"
+coverImage: ""
+tags: ["building", "supabase", "nextjs", "case-interviews", "rls", "product"]
+published: true
+aiGenerated: true
+---
+
+## The Number That Lies to You
+
+Every case interview ends with a number. "That was about a seven." You write it in a notebook, you feel briefly good or briefly bad, and you move on.
+
+The problem with that number is that it is an average, and averages are excellent liars. A seven out of ten can be a five in structure and a nine in presence. It can be a nine in structure and a three in maths. Those are completely different problems requiring completely different weeks of practice, and the seven tells you nothing about which one you have.
+
+So I started scoring five things separately: structure, maths, insight, synthesis, presence. Not because five is a magic number, but because those are the five things that actually appear on a partner's feedback sheet, and keeping them apart means a three cannot hide behind a nine.
+
+That was the whole idea. Everything below is what it took to turn it into something other people can use.
+
+## Version Zero: A Page on My Own Website
+
+On 17 August I added a route to my personal site. The commit message was unglamorous: *"Add /case-log: a private log for case interview practice."*
+
+It was about 950 lines of TypeScript. SQLite locally, Turso in production. A single `cases` table with twenty-four columns and no notion of an owner, because there was exactly one owner and he was me. Reading was open to anyone who found the URL; writing was gated behind a four-digit PIN stored in an environment variable.
+
+I want to be precise about how modest that was, because the comment I left in the auth file was honest about it:
+
+> It is not protection against someone determined, and a 4-digit space is small enough to brute force if anyone bothers to try.
+
+That was fine. The threat model was "stop a random visitor turning my practice log into a public whiteboard," not "withstand an adversary." A four-digit PIN clears that bar.
+
+Two things about version zero turned out to matter enormously later.
+
+**The first was the dashboard's organising idea.** It ranked the five dimensions **worst first**. Not alphabetically, not by strongest, not in the order they appear in a case. Worst first, because the useful question is never "how am I doing." It is "what do I drill this week," and the answer is always at the top of a list sorted the wrong way round.
+
+**The second was a feedback link.** A day after building it, I added a URL I could send to whoever had just cased me. They filled in a form, and it landed in my log as a scored entry. One link, derived from a site secret, the same for everyone, forever.
+
+That link is where the whole project got interesting, and where it eventually broke.
+
+## The Decision to Make It a Product
+
+The single-user version worked, and then a friend asked if they could use it.
+
+That is a bigger question than it sounds, because everything about version zero assumed a single user down to its bones. One table with no owner column. One PIN. One feedback link derived from one secret. There is no configuration flag that turns that into a multi-tenant application.
+
+Four decisions, made before writing anything:
+
+**It gets its own repo, domain and deploy.** Not a folder on my personal site. A practice log for other people is a different product with different failure modes, and coupling its deploys to my blog was asking for the kind of outage where a typo in a blog post takes down someone's data.
+
+**Google sign-in, one button, no passwords.** Storing password hashes for a side project is a liability with no upside. Nobody wants another password, and I do not want to be the person who has to do the incident response.
+
+**Logs are private by default, with an opt-in to publish.** My own log was public because I chose that for myself. That choice does not transfer. A stranger logging "maths 2/5" under their real name must not be indexed by Google because I defaulted it that way.
+
+**Supabase, not Turso.** I initially reached for Turso, because that was what the single-user version used and momentum is seductive. That was the wrong reason, and I am glad I stopped to interrogate it. The right answer was Supabase for two specific reasons: its Row Level Security means per-user isolation is enforced by Postgres rather than by every query remembering `WHERE user_id = ?`, and its auth handles the Google flow so I do not have to.
+
+That second point is worth dwelling on. In a multi-user app, the worst possible bug is showing one person another person's candid feedback about themselves. Not "a bit embarrassing." Genuinely harmful, and completely unrecoverable once it has happened. If the only thing standing between that outcome and my users is my discipline in writing `WHERE` clauses, then that outcome is a matter of time.
+
+So the governing rule for the whole build became: **enforce isolation in the database, not in the application.** The app filters by user as well. But that is the second lock, not the first.
+
+## The Port: What Travelled and What Did Not
+
+Porting was cheap in one respect and expensive in another.
+
+**What carried over almost unchanged:** the type definitions, the scoring maths, the date helpers, the UI primitives. Roughly 400 lines. These are pure functions: average five numbers, work out the weakest dimension, compute a streak, format `3.75` as `"7.5"`. They have no idea a database exists, and pure functions do not care how many users you have.
+
+**What had to be rewritten from scratch:** everything that touched storage. SQLite to Postgres is the easy half. Scoping every read and write to a user is the hard half.
+
+Here is the design decision I am happiest with. Rather than adding an optional `userId` parameter to each query function, I made the first argument a required `Scope` object:
+
+```ts
+export interface Scope {
+  userId: string;
+  publicView?: boolean;
+}
+```
+
+Every read takes one. There is no variant that reads everything. You cannot call these functions without stating whose log you are reading, which means "forgetting to scope a query" is not a mistake the type system will let you make. Combined with RLS underneath, you have to get it wrong twice, in two different languages, for anything to leak.
+
+The 24-column table became a table with an owner column that is `NOT NULL` and the spine of every security policy. The four-digit PIN was deleted entirely. The single global feedback token became per-user rows in their own table.
+
+## Getting It Live, Which Is Nobody's Favourite Part
+
+Two things ate more time than the actual application code, and neither was interesting. I am including them because everyone hits them and everyone assumes they are alone.
+
+**Google OAuth failed twice, both times on a pasted value.**
+
+The first failure was `Error 401: invalid_client`. Google did not recognise the client ID at all. The reason, once we looked at what Supabase was actually sending Google, was that the stored client ID ended in `.apps.googleusercontent.comRitualai`, eight stray characters glued on the end from a bad copy-paste.
+
+The second failure was `Error 400: redirect_uri_mismatch`. The redirect URI registered in Google Cloud had been truncated mid-word, to `/auth/v1/call` instead of `/auth/v1/callback`.
+
+Both were diagnosable from outside the dashboards, by reading the `Location` header of Supabase's `/auth/v1/authorize` endpoint and seeing exactly which values it was forwarding. That is a much faster loop than squinting at settings screens, and it is the trick I would pass on: when OAuth fails, stop reading your configuration and start reading the request.
+
+**The project got deployed into the wrong account.** My Vercel CLI was authenticated as my work email; my browser was signed in as my personal one. The CLI had exactly one available scope, so that is where the project landed, along with the domain.
+
+Untangling it meant deleting the project from the work scope, rewriting the commit authorship on every commit, force-pushing, and rebuilding everything under the right account. Fifteen minutes of work that would have been zero if I had run `vercel whoami` first.
+
+## The Bug That Mattered
+
+This is the part of the story I would want to read.
+
+The feedback link, the thing that lets someone score you without having an account, cannot use Row Level Security, because RLS keys off `auth.uid()` and an anonymous caser does not have one. The standard solution is a `SECURITY DEFINER` function: a stored procedure that runs with the privileges of its creator, bypassing RLS on purpose, and whose signature is narrow enough that bypassing RLS is safe.
+
+I wrote two: one to look up who a feedback link belongs to, and one to insert a single scored case. Both took the token as an argument and re-validated it internally. The insert function shared its body with an internal helper called `insert_feedback_row`, which I explicitly locked down:
+
+```sql
+revoke all on function public.insert_feedback_row(...) from public;
+```
+
+Then I wrote a test asserting that an anonymous caller could not reach it. The test passed. I shipped.
+
+Then, out of habit, I ran a `curl` against the live project, the real one with the real anon key, calling that internal function directly.
+
+It answered.
+
+Not with a permission error. With a foreign-key violation, which means it had sailed straight through every permission check and got as far as trying to insert a row. The only reason nothing happened is that I had passed a user ID that did not exist.
+
+Two things had gone wrong, and they compounded.
+
+**First, `revoke ... from public` does not do what it looks like it does.** In Postgres, `PUBLIC` is a pseudo-role meaning "everyone," but revoking from it does not remove privileges granted *explicitly* to a specific role. Supabase grants `EXECUTE` on functions in the `public` schema to the `anon` role by default. My revoke did not touch that grant. The function stayed callable by anyone holding the publishable key, which is in the JavaScript of every page.
+
+**Second, and worse: my test suite passed because my test database was safer than production.** I was running the schema against a local Postgres with a hand-written stub of Supabase's plumbing. My stub never granted anything to `anon`, so a function that was wide open in production was correctly locked in my tests. My tests were not wrong about the code. They were wrong about the world.
+
+The exploit path was real. A published log's owner ID is readable by design. With it, anyone could have pushed a fabricated, pre-approved case into that person's log, skipping the review queue built specifically to stop that.
+
+The fix was to stop relying on grants at all. The helper moved into a schema called `private`, which the REST API is not configured to serve. Now it is unreachable over HTTP no matter what any `GRANT` says. Defence that does not depend on getting a permission exactly right.
+
+Then I made the test stub replicate Supabase's default grants, confirmed the test now failed against the old code, and only then applied the fix.
+
+The lesson generalises past Postgres: **a test environment that is stricter than production will hand you false confidence, and you will not notice, because everything is green.** If you are testing security properties, your fixture has to be at least as permissive as the real thing.
+
+## The Test Suite That Lied
+
+Related, and briefly, because it is a good warning.
+
+My test runner piped `psql` output into `grep` to pick out the passing lines. When I later changed a function's signature, three test files began erroring partway through, and the runner cheerfully printed **"all checks passed."**
+
+Piping into `grep` means the shell reports `grep`'s exit status, not `psql`'s. `grep` had found some passing lines, so it exited zero, so the script considered the run a success. Three checks had silently evaporated from the suite and the summary line was as green as ever.
+
+Missing coverage reading as success is worse than a failing test, because a failing test gets fixed. The runner now checks exit codes properly, prints a count of checks that actually ran, and fails loudly.
+
+## Three Redesigns in Two Days
+
+Everything above is engineering. The bigger changes were to the product, and they came from one realisation arriving late.
+
+**Version one** ported the single-user assumption straight across: the caser fills in a form describing the case, scoring it and writing feedback. It worked. It was also completely wrong, and I did not see why for a full day.
+
+**Version two** added the ability to log a case against someone's public `@username`, so a caser did not need a link. That created an obvious spam vector, a public and guessable address that writes into your scores, so submissions landed in a pending queue for the owner to accept. That was a good solution to a problem I had invented.
+
+**Version three** was the one that mattered, and it came from noticing what was actually wrong: **I was asking the wrong person to do the typing.**
+
+Think about the moment a case ends. One person has just spent forty minutes being interrogated and has every detail fresh and every incentive to record it. The other person has just done you a favour for forty minutes and would now like their evening back. Version one handed the form to the second person.
+
+That is why case feedback never arrives. Not because people are unhelpful, but because the ask is too big.
+
+So the flow inverted. The person who *took* the case does the writing, because they were going to write it down anyway. The person who *ran* it is asked for the one thing only they can give: a number, seven times.
+
+Deleting the `@username` route and the pending queue came free with that change. If the only way in is a per-case link the owner generated and sent, there is no spam surface to defend, so the machinery defending it is dead weight. That is my favourite kind of refactor: a product insight that deletes code rather than adding it.
+
+**Version four** split it into three explicit steps, because the information does not all arrive at once:
+
+1. **Start the case.** Five fields: what it was, the casebook, the date, who cased you, the type. Under a minute, so the link can reach the caser before the case has even finished.
+2. **They score it.** Seven taps and one line. Roughly thirty seconds.
+3. **You write it up.** Your own scores and your notes, with *their* numbers on the screen above the form, so you are writing against what they said rather than from memory alone.
+
+## The Seven Moments, and Four Clocks
+
+The five dimensions I started with are good for judging a performance afterwards. They are not how a case is actually experienced, which is as a sequence.
+
+So the caser scores seven things in the order they happen: **reaction** to the prompt, **clarifying questions**, **framework**, **charts and exhibits**, **maths**, **brainstorming**, **recommendation**.
+
+Both sets are kept. They measure different things, how it felt versus how it looked, and the gap between the two averages turned out to be the most interesting number in the app. The dashboard now says things like *"You rate yourself 1.4 points out of ten higher than your casers do."* That sentence was impossible before, and it is the single most useful thing the product tells anyone.
+
+The last addition was timing. Four phases get a stopwatch: drawing the framework, explaining it, brainstorming, and the recommendation. The caser runs the clocks, for a reason that is obvious once said aloud: **a candidate cannot watch a clock and think at the same time.** Each phase is stored in seconds against a target, because "2:40 against a 2:00 target" is a drillable problem and "about three minutes" is not.
+
+## What Got Deleted
+
+A partial list, because I think the deletions say more than the additions:
+
+- The four-digit PIN
+- The single global feedback link
+- The `@username` submission route and its pending queue
+- A field for pasting the case prompt verbatim
+- A free-text notes box
+- Drill tags, and the whole dashboard panel that visualised them
+- Most of the landing page, including a grid explaining the seven moments
+
+The last one is the most instructive. The landing page had a section carefully explaining all seven areas. Anyone arriving at a case interview practice log already knows what a case interview is and already knows they should be logging practice. Selling them the problem was pure noise. What is left is one headline, three steps, and a button.
+
+## Where It Is Now
+
+Live at **caselogg.com**. Roughly 8,300 lines of TypeScript across 18 routes, an 822-line Postgres schema with 10 RLS policies and 7 security-definer functions, and about 1,500 lines of tests running 35 assertions.
+
+Those tests are all security properties, not features. They assert that a signed-in stranger cannot read, edit, delete or forge rows into someone else's log; that a case marked hidden stays hidden even in a published one; that a feedback link can only ever touch the case it names; that a caser cannot overwrite a single word the casee wrote; that revoking a link stops it working immediately; and that even the operator, me on the admin dashboard, cannot read another user's cases.
+
+That last one is deliberate. The usage dashboard shows counts and nothing else. No titles, no scores, no notes, no emails. This app tells people their log is private, and an admin panel that could read their candid feedback would make that a lie. Being able to count is enough to run the thing.
+
+There are two suites, and the second one exists because the first was not enough. A change once added a database index on a column that `create table if not exists` never adds to an already-existing table. It applied perfectly to an empty database and failed on the real one. A fresh-database test cannot catch that by construction, so there is now a second suite that applies the *previous* schema, seeds it with realistic rows, upgrades it in place, and checks the data survived.
+
+## Five Things I Would Tell Someone Starting This
+
+**Put the rules in the database.** Application code is where you express intent. The database is where you enforce it. If your isolation depends on every query remembering a `WHERE` clause, you do not have isolation, you have a habit.
+
+**Probe production.** My worst bug was invisible to a green test suite and obvious to a single `curl`. Local tests tell you your code matches your assumptions. They cannot tell you your assumptions match the platform.
+
+**Distrust a test environment that is safer than production.** Every one of my false-confidence moments came from a fixture being stricter than the real thing. Make the fixture as permissive as reality, or you are testing a world you do not deploy to.
+
+**Ask who is doing the typing.** The single biggest improvement in this project was not a feature. It was noticing that I had assigned the work to the person with the least reason to do it. That question, *who is being asked, and what is their incentive at that exact moment*, is worth more than any amount of polish.
+
+**Delete more than you think.** Every version of this that got better got shorter. The forms, the landing page, the schema, the flow. The pending queue was well-built, well-tested, and correct, and removing it made the product better, because the problem it solved stopped existing.
+
+---
+
+*Caselogg is free and live at [caselogg.com](https://caselogg.com). Sign in with Google, log a case, send the link to whoever cased you.*
+
+*A note on how this was built: the code was written in collaboration with Claude Code across two days and seventeen commits. That is worth saying plainly, both because it is true and because it is the reason a side project got a real test suite and an adversarial security pass instead of neither. The `curl` that found the RLS hole was not a flash of insight, it was habit applied consistently, which is exactly the kind of thing that survives being tired on a Tuesday evening.*

@@ -1,6 +1,7 @@
 import { PLACES } from "./data";
 import { haversineKm, project } from "./projection";
-import type { Leg, Place, Trip } from "./types";
+import { addDays } from "@/lib/dates";
+import type { Leg, Place, Stay, Trip } from "./types";
 
 export function place(id: string): Place {
   const found = PLACES[id];
@@ -173,4 +174,109 @@ export function formatTripDate(iso: string): string {
     month: "short",
     timeZone: "UTC",
   });
+}
+
+// ── planning gaps ───────────────────────────────────────────────────────────
+
+export interface BedGap {
+  placeId: string;
+  /** Set when the stretch falls inside an unbooked leg, so the city is a guess. */
+  toPlaceId?: string;
+  /** First night with no bed. */
+  from: string;
+  /** The morning you move on. Exclusive. */
+  to: string;
+  nights: number;
+  uncertain: boolean;
+}
+
+/** Where you sleep on a given night, or null when you are in the air. */
+function locationOnNight(
+  legs: Leg[],
+  night: string,
+): { placeId: string; toPlaceId?: string; uncertain: boolean } | null {
+  const past = legs.filter((l) => l.date <= night);
+  if (past.length === 0) {
+    return { placeId: legs[0].from, uncertain: false };
+  }
+  const leg = past[past.length - 1];
+  // An overnight flight means the night is spent in transit, not in a bed.
+  if (leg.arriveDate && leg.date === night) return null;
+  return leg.unbooked
+    ? { placeId: leg.from, toPlaceId: leg.to, uncertain: true }
+    : { placeId: leg.to, uncertain: false };
+}
+
+function nightCovered(stays: Stay[], night: string): boolean {
+  return stays.some((s) => s.from <= night && night < s.to);
+}
+
+export interface NightsSummary {
+  total: number;
+  booked: number;
+  inTransit: number;
+  unbooked: number;
+  gaps: BedGap[];
+}
+
+/**
+ * Walks the trip one night at a time and collects every stretch with no
+ * accommodation behind it. The last day is excluded: you fly home that morning.
+ */
+export function nightsSummary(trip: Trip): NightsSummary {
+  const gaps: BedGap[] = [];
+  let booked = 0;
+  let inTransit = 0;
+  let total = 0;
+
+  let current: BedGap | null = null;
+  const flush = () => {
+    if (current) gaps.push(current);
+    current = null;
+  };
+
+  for (let night = trip.start; night < trip.end; night = addDays(night, 1)) {
+    total++;
+    const where = locationOnNight(trip.legs, night);
+
+    if (where === null) {
+      inTransit++;
+      flush();
+      continue;
+    }
+    if (nightCovered(trip.stays, night)) {
+      booked++;
+      flush();
+      continue;
+    }
+
+    const sameStretch =
+      current &&
+      current.placeId === where.placeId &&
+      current.toPlaceId === where.toPlaceId;
+
+    if (sameStretch && current) {
+      current.nights++;
+      current.to = addDays(night, 1);
+    } else {
+      flush();
+      current = {
+        placeId: where.placeId,
+        toPlaceId: where.toPlaceId,
+        from: night,
+        to: addDays(night, 1),
+        nights: 1,
+        uncertain: where.uncertain,
+      };
+    }
+  }
+  flush();
+
+  return {
+    total,
+    booked,
+    inTransit,
+    unbooked: total - booked - inTransit,
+    gaps: gaps.sort((a, b) => b.nights - a.nights),
+  };
 }

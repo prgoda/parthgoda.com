@@ -5,6 +5,7 @@ import { TRIPS } from "@/lib/travels/data";
 import {
   formatKm,
   formatTripDate,
+  nightsSummary,
   place,
   tripStats,
 } from "@/lib/travels/summary";
@@ -65,6 +66,7 @@ export default function TravelsPage() {
         const first = place(trip.legs[0].from);
         const last = place(trip.legs[trip.legs.length - 1].to);
         const gaps = trip.legs.filter((l) => l.unbooked);
+        const nights = nightsSummary(trip);
 
         return (
           <article key={trip.slug} className="mb-16">
@@ -138,6 +140,72 @@ export default function TravelsPage() {
               />
             </section>
 
+            <section className="mt-10 rounded-xl border border-amber-200 bg-amber-50/50 p-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <h3 className="font-serif text-2xl font-bold text-zinc-900">
+                  Still to book
+                </h3>
+                <span className="text-sm font-semibold text-amber-800">
+                  {nights.unbooked} of {nights.total} nights
+                </span>
+              </div>
+              <p className="mt-1 text-sm text-zinc-600">
+                {nights.booked} {nights.booked === 1 ? "night has" : "nights have"} a
+                bed behind {nights.booked === 1 ? "it" : "them"}
+                {nights.inTransit > 0 &&
+                  `, ${nights.inTransit} ${
+                    nights.inTransit === 1 ? "is" : "are"
+                  } spent in the air`}
+                . Longest stretch first, because that is the one that gets
+                expensive if you leave it.
+              </p>
+
+              <ul className="mt-5 divide-y divide-amber-200/70 border-t border-amber-200/70">
+                {nights.gaps.map((gap, i) => (
+                  <li
+                    key={i}
+                    className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2.5"
+                  >
+                    <span className="w-24 shrink-0 font-serif text-xl font-bold text-zinc-900">
+                      <span className="tabular-nums">{gap.nights}</span>
+                      <span className="ml-1.5 text-xs font-sans font-semibold uppercase tracking-widest text-amber-800">
+                        {gap.nights === 1 ? "night" : "nights"}
+                      </span>
+                    </span>
+                    <span className="min-w-0 flex-1 basis-40 text-sm font-semibold text-zinc-800">
+                      {gap.toPlaceId
+                        ? `${place(gap.placeId).name} to ${place(gap.toPlaceId).name}`
+                        : place(gap.placeId).name}
+                      {gap.uncertain && (
+                        <span className="ml-2 font-normal text-amber-700">
+                          route not booked either, so the city is a guess
+                        </span>
+                      )}
+                    </span>
+                    <span className="shrink-0 text-sm tabular-nums text-zinc-500">
+                      {formatTripDate(gap.from)} to {formatTripDate(gap.to)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {gaps.length > 0 && (
+                <div className="mt-5 border-t border-amber-200/70 pt-4">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-amber-800">
+                    And no ticket for
+                  </p>
+                  <ul className="mt-2 space-y-1 text-sm text-zinc-700">
+                    {gaps.map((leg, i) => (
+                      <li key={i}>
+                        {place(leg.from).name} to {place(leg.to).name},{" "}
+                        {leg.dateLabel ?? formatTripDate(leg.date)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+
             <section className="mt-12">
               <h3 className="font-serif text-2xl font-bold text-zinc-900 mb-6">
                 Leg by leg
@@ -157,22 +225,6 @@ export default function TravelsPage() {
                 {Math.round((stats.longest.km / stats.totalKm) * 100)}% of the
                 whole trip.
               </p>
-              {gaps.length > 0 && (
-                <div className="mt-4 border-t border-zinc-200 pt-4 text-sm text-zinc-500">
-                  <p>
-                    {gaps.length === 1 ? "One gap" : `${gaps.length} gaps`} still
-                    to close:
-                  </p>
-                  <ul className="mt-1.5 space-y-1">
-                    {gaps.map((leg, i) => (
-                      <li key={i}>
-                        {place(leg.from).name} to {place(leg.to).name},{" "}
-                        {leg.dateLabel ?? formatTripDate(leg.date)}.
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
             </section>
           </article>
         );

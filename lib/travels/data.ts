@@ -155,6 +155,13 @@ export const TRIPS: Trip[] = [
     ],
     stays: [
       {
+        placeId: "bze",
+        name: "Fort George Hotel & Spa",
+        from: "2026-08-29",
+        to: "2026-08-30",
+        nights: 1,
+      },
+      {
         placeId: "mad",
         name: "Thompson Madrid",
         from: "2026-08-31",

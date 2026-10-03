@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { label: "AI", href: "/category/ai" },
   { label: "MBA Life", href: "/category/mba-life" },
   { label: "Music", href: "/category/music" },
+  { label: "Career", href: "/category/career" },
   // Resume is hidden from the nav; /resume still resolves by direct link.
   { label: "Travels", href: "/travels" },
   { label: "Caselogg", href: "https://caselogg.com", external: true },

@@ -2,7 +2,7 @@ export interface PostFrontmatter {
   title: string;
   slug: string;
   date: string;
-  category: "ai" | "mba-life" | "music" | "gtm-engineering";
+  category: "ai" | "mba-life" | "music" | "career";
   excerpt: string;
   author: string;
   coverImage?: string;

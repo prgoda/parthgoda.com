@@ -1,0 +1,85 @@
+---
+title: "Nvidia Backed the Startup Built to Beat Its Own Switch Chip"
+slug: "upscale-nvidia-token-fabric"
+date: "2026-10-10"
+category: "career"
+excerpt: "On October 8, Nvidia-backed startup Upscale AI launched Token Fabric, a networking platform that embeds Nvidia's own Spectrum-X silicon — while Upscale's other product, a chip called SkyHammer, is built explicitly to beat Nvidia's NVSwitch. Here's why Nvidia funded both sides of its own networking business."
+author: "Parth Goda"
+coverImage: ""
+tags: ["partnerships", "ai", "networking", "nvidia", "semiconductors"]
+published: true
+aiGenerated: true
+---
+
+## What Was Actually Agreed
+
+On October 8, [Upscale AI launched Token Fabric](https://www.upscale.com/blogs/upscale-ai-supercharges-open-heterogeneous-scale-out-ai-clusters-with-nvidia-ethernet-switch-silicon), a networking portfolio meant to let a data center mix AI chips from different vendors on one network instead of locking into a single supplier's wiring. It pairs Upscale's own SkyFabriX scale-up silicon with scale-out gear built around Nvidia's Spectrum-X Ethernet switch chips, tied together by Upscale's SkyOS and SkyCMD software, and leans on open standards — UALink and Ethernet for Scale-Up Networking (ESUN) — rather than Nvidia's proprietary NVLink, so chips and network cards from competing vendors can, in principle, share one fabric. The first piece ships in Q4 2026; the full platform rolls out through early 2027. Neither company disclosed pricing, a named customer, or benchmarks.
+
+<svg viewBox="0 0 680 220" width="100%" style={{maxWidth: "680px", height: "auto", display: "block", margin: "2rem auto"}}>
+  <text x="170" y="18" textAnchor="middle" fontSize="12" fontWeight="700" letterSpacing="1" fill="#0c4a6e">SCALE-OUT: PARTNERS</text>
+  <rect x="20" y="28" width="300" height="170" rx="12" fill="#f0f9ff" stroke="#0284c7" strokeWidth="2" />
+  <text x="170" y="58" textAnchor="middle" fontSize="13" fontWeight="600" fill="#0c4a6e">Rack-to-rack Ethernet</text>
+  <rect x="40" y="76" width="260" height="36" rx="6" fill="#ffffff" stroke="#7dd3fc" />
+  <text x="170" y="98" textAnchor="middle" fontSize="12" fill="#0c4a6e">SkyOS + Nvidia Spectrum-X</text>
+  <text x="170" y="140" textAnchor="middle" fontSize="12" fill="#27272a">Nvidia is investor +</text>
+  <text x="170" y="158" textAnchor="middle" fontSize="12" fill="#27272a">chip supplier here</text>
+  <text x="170" y="182" textAnchor="middle" fontSize="11" fill="#52525b">Open standards: UALink, ESUN</text>
+
+  <text x="510" y="18" textAnchor="middle" fontSize="12" fontWeight="700" letterSpacing="1" fill="#52525b">SCALE-UP: COMPETES</text>
+  <rect x="360" y="28" width="300" height="170" rx="12" fill="#fafafa" stroke="#a1a1aa" strokeWidth="2" strokeDasharray="6 4" />
+  <text x="510" y="58" textAnchor="middle" fontSize="13" fontWeight="600" fill="#3f3f46">Inside-the-rack GPU links</text>
+  <rect x="380" y="76" width="260" height="36" rx="6" fill="#ffffff" stroke="#d4d4d8" />
+  <text x="510" y="98" textAnchor="middle" fontSize="12" fill="#3f3f46">SkyHammer vs NVSwitch/NVLink</text>
+  <text x="510" y="140" textAnchor="middle" fontSize="12" fill="#27272a">Nvidia has no stake</text>
+  <text x="510" y="158" textAnchor="middle" fontSize="12" fill="#27272a">in SkyHammer</text>
+  <text x="510" y="182" textAnchor="middle" fontSize="11" fill="#52525b">Nvidia's own proprietary link</text>
+</svg>
+
+The partnership predates the launch. Nvidia joined Upscale's $190 million funding extension in June, alongside Salesforce Ventures and Temasek, bringing Upscale's total raised to $500 million at a $2 billion valuation — the size of Nvidia's own check was not disclosed. That sits awkwardly next to Upscale's other product: a separate, [$200 million January round funded SkyHammer](https://www.theregister.com/on-prem/2026/01/22/upscale-ai-raises-200m-to-challenge-nvidias-nvswitch/4346236), a scale-up switch chip built explicitly to compete with NVSwitch, the interconnect inside Nvidia's own GPU racks. Nvidia is, in effect, an investor and supplier to a company trying to take a bite out of one of Nvidia's own product lines, as the diagram above shows.
+
+## Why Now
+
+<svg viewBox="0 0 680 170" width="100%" style={{maxWidth: "680px", height: "auto", display: "block", margin: "2rem auto"}}>
+  <line x1="50" y1="85" x2="630" y2="85" stroke="#d4d4d8" strokeWidth="2" />
+
+  <circle cx="90" cy="85" r="7" fill="#a1a1aa" />
+  <text x="90" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Jan 22</text>
+  <text x="90" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">Upscale raises $200M</text>
+  <text x="90" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">to build SkyHammer</text>
+
+  <circle cx="280" cy="85" r="7" fill="#a1a1aa" />
+  <text x="280" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Jun 22</text>
+  <text x="280" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">Nvidia joins Upscale's</text>
+  <text x="280" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">funding round as investor</text>
+
+  <circle cx="460" cy="85" r="7" fill="#0284c7" />
+  <text x="460" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Oct 8</text>
+  <text x="460" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">Token Fabric launches</text>
+  <text x="460" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">with Spectrum-X inside</text>
+
+  <circle cx="610" cy="85" r="7" fill="#a1a1aa" />
+  <text x="610" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Early 2027</text>
+  <text x="610" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">Full platform GA</text>
+  <text x="610" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">(per Upscale, unconfirmed)</text>
+</svg>
+
+The split makes more sense once the two layers of a data center network are separated, as the timeline above shows. Scale-up — the wiring between GPUs inside one rack — is where Nvidia's NVLink and NVSwitch command what [The Next Platform describes as a steep premium](https://www.nextplatform.com/connect/2026/10/09/upscale-ai-partners-with-nvidia-while-competing-with-it/5302456), and where Nvidia has little incentive to open up. Scale-out — the Ethernet wiring between racks — is more contested ground, where hyperscalers increasingly want to mix Nvidia GPUs with custom silicon from AWS, Google, or AMD. Reading Nvidia's investment as a bet that it would rather supply switch chips inside an open, multi-vendor fabric than be shut out of that layer entirely is an interpretation, not something Nvidia has stated, but it fits the pattern of Nvidia's roughly $99 billion in AI equity stakes this year, many of which buy it a seat inside ecosystems it doesn't fully control. CEO Barun Kar put the underlying gap more simply, telling [Network World](https://www.networkworld.com/article/4232707/upscale-takes-on-ai-networking-silos-with-token-fabric.html) that "compute is ramping up on a rapid scale, and networking has fallen way behind."
+
+## Who It Affects
+
+Broadcom and AMD's camp in the rival UALink consortium now faces a cross-vendor fabric that ships with Nvidia's own silicon inside it, undercutting the "Nvidia versus everyone else" framing those efforts leaned on. Hyperscalers and neoclouds running mixed fleets are the intended beneficiaries if Token Fabric's cross-vendor claims hold up outside a press release. Upscale itself now has to keep two stories straight with the same customers: partner with Nvidia at the rack-to-rack layer, compete with it inside the rack.
+
+## What to Watch Next
+
+Three things would turn this from a funding relationship into a working product: whether Upscale publishes SkyHammer's specs and a named customer, since neither exists yet; whether any chipmaker besides Nvidia confirms its silicon runs inside Token Fabric, which would make the "any vendor" claim more than marketing; and whether Nvidia loosens the NVLink licensing terms that currently restrict customers from mixing NVSwitch with non-Nvidia processors, as Upscale's open-standard alternative picks up customers.
+
+---
+
+### Sources
+
+- [Upscale: Upscale AI Supercharges Open, Heterogeneous Scale-Out AI Clusters with NVIDIA Ethernet Switch Silicon](https://www.upscale.com/blogs/upscale-ai-supercharges-open-heterogeneous-scale-out-ai-clusters-with-nvidia-ethernet-switch-silicon) — primary announcement, October 8, 2026
+- [Network World: Nvidia-backed Upscale takes on AI networking silos with Token Fabric](https://www.networkworld.com/article/4232707/upscale-takes-on-ai-networking-silos-with-token-fabric.html) — October 8, 2026
+- [The Next Platform: Upscale AI Partners With Nvidia While Competing With It](https://www.nextplatform.com/connect/2026/10/09/upscale-ai-partners-with-nvidia-while-competing-with-it/5302456) — October 9, 2026
+- [Dell'Oro Group: From Scale-Up to Scale-Out — Upscale AI Extends Its Open Networking Vision Through NVIDIA Partnership](https://www.delloro.com/from-scale-up-to-scale-out-upscale-ai-extends-its-open-networking-vision-through-nvidia-partnership/) — October 2026
+- [SiliconANGLE: AI networking provider Upscale AI raises $190M at $2B valuation](https://siliconangle.com/2026/06/22/ai-networking-provider-upscale-ai-raises-190m-2b-valuation/) — June 22, 2026
+- [The Register: Upscale AI raises $200M to challenge Nvidia's NVSwitch](https://www.theregister.com/on-prem/2026/01/22/upscale-ai-raises-200m-to-challenge-nvidias-nvswitch/4346236) — January 22, 2026

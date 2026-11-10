@@ -1,0 +1,83 @@
+---
+title: "Google's Most Secure AI Chip Doesn't Run on Google's Own Silicon"
+slug: "amd-google-tpu-8tx-confidential-computing"
+date: "2026-11-10"
+category: "career"
+excerpt: "Google spent 2026 moving its flagship TPUs onto Axion, its own Arm-based CPU, to cut its dependence on outside chipmakers. Seven months later, the one new TPU built specifically to be trusted with sensitive data runs on AMD instead."
+author: "Parth Goda"
+coverImage: ""
+tags: ["partnerships", "ai", "semiconductors", "amd", "google-cloud", "confidential-computing"]
+published: false
+aiGenerated: true
+---
+
+## What Was Actually Agreed
+
+On November 9, [AMD announced](https://newsroom.amd.com/news/amd-epyc-expands-leadership-foundation-ai/) that its 5th Gen EPYC processors now run the host infrastructure for Google Cloud's new TPU 8tx — what Google calls the first cloud Tensor Processing Unit system with hardware-enforced confidential computing, meaning data stays encrypted even while the chip is actively working on it, not just at rest or in transit. Google Cloud's Mark Lohmeyer is quoted saying the pairing brings "hardware-enforced confidential computing to cloud TPUs for the first time." AMD's Dan McNamara framed it as proof that a host CPU has to match the demands of whatever accelerator it's attached to. Neither company disclosed pricing, volumes, or a firm ship date beyond "available soon."
+
+<svg viewBox="0 0 680 240" width="100%" style={{maxWidth: "680px", height: "auto", display: "block", margin: "2rem auto"}}>
+  <text x="340" y="20" textAnchor="middle" fontSize="12" fontWeight="700" letterSpacing="1" fill="#27272a">GOOGLE&apos;S EIGHTH-GEN TPUs: WHO HOSTS EACH ONE</text>
+
+  <text x="40" y="46" fontSize="11" fill="#71717a" fontWeight="600">APRIL 22, 2026</text>
+  <rect x="40" y="54" width="180" height="40" rx="8" fill="#ffffff" stroke="#d4d4d8" strokeWidth="1.5" />
+  <text x="130" y="78" textAnchor="middle" fontSize="13" fill="#27272a" fontWeight="600">TPU 8t (training)</text>
+  <rect x="240" y="54" width="400" height="40" rx="8" fill="#fafafa" stroke="#a1a1aa" strokeWidth="1.5" />
+  <text x="440" y="78" textAnchor="middle" fontSize="13" fill="#52525b">Host CPU: Axion — Google&apos;s own Arm chip</text>
+
+  <rect x="40" y="104" width="180" height="40" rx="8" fill="#ffffff" stroke="#d4d4d8" strokeWidth="1.5" />
+  <text x="130" y="128" textAnchor="middle" fontSize="13" fill="#27272a" fontWeight="600">TPU 8i (inference)</text>
+  <rect x="240" y="104" width="400" height="40" rx="8" fill="#fafafa" stroke="#a1a1aa" strokeWidth="1.5" />
+  <text x="440" y="128" textAnchor="middle" fontSize="13" fill="#52525b">Host CPU: Axion — Google&apos;s own Arm chip</text>
+
+  <text x="40" y="168" fontSize="11" fill="#0284c7" fontWeight="700">NOVEMBER 9, 2026</text>
+  <rect x="40" y="176" width="180" height="46" rx="8" fill="#f0f9ff" stroke="#0284c7" strokeWidth="2" />
+  <text x="130" y="203" textAnchor="middle" fontSize="13" fill="#0c4a6e" fontWeight="700">TPU 8tx (confidential)</text>
+  <rect x="240" y="176" width="400" height="46" rx="8" fill="#f0f9ff" stroke="#0284c7" strokeWidth="2" />
+  <text x="440" y="203" textAnchor="middle" fontSize="13" fill="#0c4a6e" fontWeight="700">Host CPU: AMD EPYC — outside silicon</text>
+</svg>
+
+The detail that makes this more than a routine chip sale: seven months earlier, at [Cloud Next 2026](https://cloud.google.com/blog/products/compute/tpu-8t-and-tpu-8i-technical-deep-dive), Google launched the rest of its eighth-generation TPU line — 8t for training, 8i for inference — on Axion, its own Arm-based CPU, explicitly to reduce its reliance on merchant silicon. TPU 8tx breaks that pattern. For the one TPU built specifically to be trusted with an enterprise's most sensitive data, Google reached outside its own chip program.
+
+## Why Now
+
+<svg viewBox="0 0 680 170" width="100%" style={{maxWidth: "680px", height: "auto", display: "block", margin: "2rem auto"}}>
+  <line x1="50" y1="85" x2="630" y2="85" stroke="#d4d4d8" strokeWidth="2" />
+
+  <circle cx="80" cy="85" r="7" fill="#0284c7" />
+  <text x="80" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Nov 2025</text>
+  <text x="80" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">Private AI Compute</text>
+  <text x="80" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">runs CPU side on AMD</text>
+
+  <circle cx="260" cy="85" r="7" fill="#0284c7" />
+  <text x="260" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Apr 2026</text>
+  <text x="260" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">TPU 8t / 8i launch</text>
+  <text x="260" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">on Google&apos;s own Axion</text>
+
+  <circle cx="440" cy="85" r="7" fill="#a1a1aa" />
+  <text x="440" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Aug 2026</text>
+  <text x="440" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">Reports surface of an</text>
+  <text x="440" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">AMD-built TPU v10 (unconfirmed)</text>
+
+  <circle cx="610" cy="85" r="7" fill="#0284c7" />
+  <text x="610" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Nov 9, 2026</text>
+  <text x="610" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">TPU 8tx launches</text>
+  <text x="610" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">on AMD EPYC</text>
+</svg>
+
+This isn't a cold start. A year earlier, [Google's Private AI Compute platform](https://www.theregister.com/2025/11/12/google_touts_private_ai_compute/) already ran its CPU-side confidential workloads on AMD's SEV-SNP, while the TPU side of that same system relied on a Google-built enclave the company described only as delivering security "comparable to" a true trusted execution environment — an implicit admission that the accelerator side of the stack wasn't yet proven the way the CPU side was. TPU 8tx reads as Google finishing that job: extending the AMD trust boundary it already relied on for CPUs out to the accelerator itself, and turning it into a product customers can buy rather than an internal platform. Reading it that way is an interpretation Google hasn't confirmed; the company hasn't said publicly why 8tx uses AMD while 8t and 8i use Axion.
+
+## What Each Side Gets, and Who It Affects
+
+AMD gets a visible, named role inside Google's most security-sensitive AI product, months after Google spent its own keynote publicly promoting in-house silicon — a useful signal for every other hyperscaler weighing custom chips that going in-house doesn't have to mean going alone on every product. Google gets a confidential-inference offering to sell against Microsoft Azure's and AWS's own confidential-computing pitches, without betting an unproven trust boundary on Axion before it's ready. Intel is the clear loser here: it hosts neither this TPU nor the April ones. Arm's Axion program takes a quieter hit, since Google's "mostly our own silicon" strategy now has a visible, security-shaped exception.
+
+[Unconfirmed reports from August](https://www.datacenterdynamics.com/en/news/google-rumored-to-have-partnered-with-amd-on-tpu-v10-as-shipments-of-current-generations-revised-down-report/) say AMD and Google are separately exploring a hybrid tenth-generation TPU with CPU cores on the same package — a far bigger bet that neither company has confirmed and that belongs in this story only as something to watch, not something that happened. Analysts have also noted that Google gave no attestation details or independent verification for 8tx's confidential-computing claims, and AMD's SEV-SNP carries a public record of prior attacks researchers have had to patch. What would confirm this is working: Google publishing attestation specifics, a named enterprise customer actually deploying 8tx rather than piloting it, and whether the rumored TPU v10 collaboration ever becomes an official one.
+
+---
+
+### Sources
+
+- [AMD: AMD EPYC Expands Its Leadership at the Foundation of AI](https://newsroom.amd.com/news/amd-epyc-expands-leadership-foundation-ai/) — November 9, 2026
+- [Google Cloud: TPU 8t and TPU 8i technical deep dive](https://cloud.google.com/blog/products/compute/tpu-8t-and-tpu-8i-technical-deep-dive) — April 22, 2026
+- [The Register: Google apes Apple, swears cloud-based AI will keep your info private](https://www.theregister.com/2025/11/12/google_touts_private_ai_compute/) — November 12, 2025
+- [Seoul Economic Daily: Google Taps AMD CPUs for New AI Chips Despite In-House Push](https://en.sedaily.com/international/2026/11/10/google-taps-amd-cpus-for-new-ai-chips-despite-in-house-push) — November 10, 2026
+- [DataCenterDynamics: Google rumored to have partnered with AMD on TPU v10 as shipments of current generations revised down, report](https://www.datacenterdynamics.com/en/news/google-rumored-to-have-partnered-with-amd-on-tpu-v10-as-shipments-of-current-generations-revised-down-report/) — August 20, 2026

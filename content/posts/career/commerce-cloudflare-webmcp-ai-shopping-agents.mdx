@@ -1,0 +1,82 @@
+---
+title: "Commerce.com Turned On AI Shopping Agents for 100,000 Stores. The Agents Mostly Aren't There Yet."
+slug: "commerce-cloudflare-webmcp-ai-shopping-agents"
+date: "2026-10-22"
+category: "career"
+excerpt: "On October 21, Commerce.com and Cloudflare switched on an experimental browser standard called WebMCP, by default, across roughly 100,000 online stores, so AI shopping agents can read real inventory instead of scraping the page. The catch: almost no mainstream agent can call it yet."
+author: "Parth Goda"
+coverImage: ""
+tags: ["partnerships", "agentic-ai", "commerce.com", "cloudflare", "ecommerce", "webmcp"]
+published: false
+aiGenerated: true
+---
+
+## What Was Actually Agreed
+
+On October 21, [Commerce.com](https://www.globenewswire.com/news-release/2026/10/21/3385458/0/en/commerce-and-cloudflare-bring-ai-shopping-assistants-to-bigcommerce-merchants-online-stores-with-webmcp.html) — the e-commerce platform that renamed itself from BigCommerce in 2025 — and Cloudflare said Cloudflare has switched on WebMCP, an experimental browser standard, by default across nearly 100,000 of Commerce.com's merchant storefronts. Cloudflare injects a small script at its network edge so each store's real product catalog, prices, and inventory are exposed as callable "tools" — `search_products`, `add_to_cart` — that a WebMCP-aware browser agent can invoke directly, rather than screen-scraping the page and guessing. Merchants need no code changes; eligible stores get it automatically and can opt out in a settings menu. Checkout still redirects to the merchant's own site. [Cloudflare's own writeup](https://blog.cloudflare.com/webmcp-commerce/) frames this as solving a narrower problem too: WebMCP was built as a single on/off switch for an entire domain, and Cloudflare's script lets individual merchants control it instead. Neither company disclosed a fee tied to the integration.
+
+<svg viewBox="0 0 680 200" width="100%" style={{maxWidth: "680px", height: "auto", display: "block", margin: "2rem auto"}}>
+  <text x="340" y="18" textAnchor="middle" fontSize="12" fontWeight="700" letterSpacing="1" fill="#52525b">HOW AN AGENT SHOPS, BEFORE AND AFTER</text>
+  <rect x="20" y="32" width="300" height="150" rx="12" fill="#fafafa" stroke="#a1a1aa" strokeWidth="2" strokeDasharray="6 4" />
+  <text x="170" y="56" textAnchor="middle" fontSize="13" fontWeight="700" fill="#3f3f46">BEFORE: scrape &amp; guess</text>
+  <text x="170" y="82" textAnchor="middle" fontSize="12" fill="#52525b">Reads rendered HTML</text>
+  <text x="170" y="100" textAnchor="middle" fontSize="12" fill="#52525b">or a screenshot</text>
+  <text x="170" y="126" textAnchor="middle" fontSize="12" fill="#52525b">Guesses which element</text>
+  <text x="170" y="144" textAnchor="middle" fontSize="12" fill="#52525b">is "add to cart"</text>
+  <text x="170" y="166" textAnchor="middle" fontSize="12" fill="#52525b">Prices/stock can be stale</text>
+
+  <rect x="360" y="32" width="300" height="150" rx="12" fill="#f0f9ff" stroke="#0284c7" strokeWidth="2" />
+  <text x="510" y="56" textAnchor="middle" fontSize="13" fontWeight="700" fill="#0c4a6e">AFTER: call a tool</text>
+  <text x="510" y="82" textAnchor="middle" fontSize="12" fill="#0c4a6e">Calls search_products()</text>
+  <text x="510" y="100" textAnchor="middle" fontSize="12" fill="#0c4a6e">against live catalog data</text>
+  <text x="510" y="126" textAnchor="middle" fontSize="12" fill="#0c4a6e">Calls add_to_cart()</text>
+  <text x="510" y="144" textAnchor="middle" fontSize="12" fill="#0c4a6e">directly, no guessing</text>
+  <text x="510" y="166" textAnchor="middle" fontSize="12" fill="#0c4a6e">Hands off to checkout</text>
+</svg>
+
+## What Each Side Gets, and Gives Up
+
+Cloudflare gets to be the default plumbing behind a fledgling standard, at the same moment it co-runs a different piece of agentic-commerce infrastructure: Visa's [Trusted Agent Protocol](https://investor.visa.com/news/news-details/2025/Visa-Introduces-Trusted-Agent-Protocol-An-Ecosystem-Led-Framework-for-AI-Commerce/), announced with Visa a year earlier, which verifies an agent's identity rather than exposing a store's tools. Sitting underneath both — one for identity, one for catalog access — is a hedge: Cloudflare doesn't have to bet on which agentic-commerce standard wins. Commerce.com gets to claim its merchants are "agent-ready" ahead of rivals like Shopify or Adobe Commerce, which fits a company that renamed itself specifically to signal an agentic-commerce pivot. What both give up is some control over who reads the data: once a store's catalog is exposed as a callable tool, any WebMCP-compliant agent can use it, not only ones either company has a relationship with. Financial terms of the Commerce.com–Cloudflare arrangement were not disclosed by either side.
+
+## Why Now
+
+The timing tracks the standard's own rollout more than merchant demand. Google [unveiled WebMCP](https://developer.chrome.com/blog/ai-webmcp-origin-trial) in February 2026 and opened a Chrome 149 origin trial in June; Cloudflare ran a smaller, manually configured beta in August; this week's move defaults it on at scale. That ordering matters because, as of this writing, no mainstream consumer AI agent — including Chrome's own Gemini assistant — reliably calls WebMCP tools in production; Google has said Gemini-in-Chrome support is coming "soon," without a firm date. Reading this as Commerce.com and Cloudflare positioning merchant infrastructure ahead of agent demand, rather than responding to it, is an interpretation, not something either company stated.
+
+<svg viewBox="0 0 680 170" width="100%" style={{maxWidth: "680px", height: "auto", display: "block", margin: "2rem auto"}}>
+  <line x1="40" y1="85" x2="640" y2="85" stroke="#d4d4d8" strokeWidth="2" />
+  <circle cx="80" cy="85" r="7" fill="#0284c7" />
+  <text x="80" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Feb 2026</text>
+  <text x="80" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">Google unveils</text>
+  <text x="80" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">WebMCP concept</text>
+  <circle cx="270" cy="85" r="7" fill="#0284c7" />
+  <text x="270" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Jun 2026</text>
+  <text x="270" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">Chrome 149 origin</text>
+  <text x="270" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">trial opens</text>
+  <circle cx="460" cy="85" r="7" fill="#0284c7" />
+  <text x="460" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Oct 21, 2026</text>
+  <text x="460" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">Default-on across</text>
+  <text x="460" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">~100K Commerce.com stores</text>
+  <circle cx="610" cy="85" r="7" fill="#a1a1aa" />
+  <text x="610" y="65" textAnchor="middle" fontSize="12" fill="#52525b">Unscheduled</text>
+  <text x="610" y="112" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">Gemini-in-Chrome</text>
+  <text x="610" y="128" textAnchor="middle" fontSize="12" fill="#27272a" fontWeight="600">support (promised)</text>
+</svg>
+
+## Who It Affects
+
+Other commerce platforms — Shopify, Adobe Commerce, Salesforce Commerce Cloud — face pressure to flip a comparable switch or cede the "agent-ready" claim to Commerce.com. It also lands inside a broader standards contest this site [covered earlier in October](/posts/career/meta-sierra-personal-agent-protocol): Meta and Sierra's Personal Agent Protocol governs how an agent gets permission to act; OpenAI and Stripe's Agentic Commerce Protocol governs in-agent payment; Visa and Cloudflare's Trusted Agent Protocol governs agent identity. WebMCP, now live on Commerce.com's base, is the layer underneath all of them: what an agent can actually ask a webpage to do. Shoppers who already use browser agents gain a cleaner path to real inventory; merchants gain exposure to an audience that doesn't yet meaningfully exist.
+
+## What to Watch Next
+
+Three things would turn this from a bet into a result: Gemini-in-Chrome or another mainstream agent actually calling WebMCP tools in production; a rival commerce platform matching Commerce.com's default-on move; and Commerce.com disclosing any measurable agent-driven traffic or sales from the ~100,000 enabled stores, rather than only the infrastructure switch itself.
+
+---
+
+### Sources
+
+- [GlobeNewswire: Commerce and Cloudflare Bring AI Shopping Assistants to BigCommerce Merchants' Online Stores with WebMCP](https://www.globenewswire.com/news-release/2026/10/21/3385458/0/en/commerce-and-cloudflare-bring-ai-shopping-assistants-to-bigcommerce-merchants-online-stores-with-webmcp.html) — primary announcement, October 21, 2026
+- [Cloudflare Blog: How Commerce.com and Cloudflare are getting storefronts ready for AI agents](https://blog.cloudflare.com/webmcp-commerce/) — primary, October 21, 2026
+- [Chrome Developers: WebMCP origin trial](https://developer.chrome.com/blog/ai-webmcp-origin-trial) — June 9, 2026
+- [Visa: Visa Introduces Trusted Agent Protocol](https://investor.visa.com/news/news-details/2025/Visa-Introduces-Trusted-Agent-Protocol-An-Ecosystem-Led-Framework-for-AI-Commerce/) — October 14, 2025
+- [Built In Austin: BigCommerce Rebrands Under New Parent Brand Commerce](https://www.builtinaustin.com/articles/bigcommerce-rebrands-commerce-20250805) — August 2025
+- [Attract Group: WebMCP Explained](https://attractgroup.com/blog/webmcp-explained/) — adoption-gap context (single-source; see PR notes)
